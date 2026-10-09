@@ -25,6 +25,13 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Edit nothing.
 - Report any rerun, and never hide a flaky test.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `PASS`: the suite passes.
+- `FAIL`: it lists the failing tests.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

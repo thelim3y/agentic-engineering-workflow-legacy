@@ -24,6 +24,13 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Never force a merge.
 - Never delete the branch unless told to.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `MERGED`: the pull request is merged.
+- `MERGE_FAILED`: the merge did not happen.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

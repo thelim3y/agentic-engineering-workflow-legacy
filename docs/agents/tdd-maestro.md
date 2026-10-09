@@ -25,6 +25,15 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Run each test and see it fail for the intended reason.
 - Write no production code.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `TESTS_WRITTEN`: the tests fail for the intended reason.
+- `TEST_KEPT`: a disputed test stays.
+- `TEST_CHANGED`: a disputed test was changed.
+- `TESTS_NOT_WRITTEN`: it could not write tests that fail for the intended reason.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

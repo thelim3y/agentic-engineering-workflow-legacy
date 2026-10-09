@@ -24,6 +24,13 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Name the behaviours and the files involved, not the code.
 - List what is out of scope.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `PLANNED`: the plan is written.
+- `PLAN_FAILED`: it could not produce a plan.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

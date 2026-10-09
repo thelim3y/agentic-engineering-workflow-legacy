@@ -24,6 +24,13 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Cite a file and line for every finding.
 - Edit nothing.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `APPROVED`: the pull request is good.
+- `CHANGES_NEEDED`: it lists the changes.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

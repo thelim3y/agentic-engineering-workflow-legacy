@@ -25,6 +25,14 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Never skip checks, for example with `--no-verify`.
 - Stay inside the task.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `CODED`: the code is written.
+- `TEST_DISPUTED`: it believes a test is wrong, and names it.
+- `CODE_FAILED`: it could not write code that passes the tests.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

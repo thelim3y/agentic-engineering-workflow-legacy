@@ -25,6 +25,14 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Never plan or write code.
 - Create sub-issues without `ai-ready`, as `issues.md` says.
 
+## Verdicts
+
+The verdicts every agent can return are in `verdicts.md`. This agent also returns:
+
+- `FITS`: the task is right-sized.
+- `SPLIT`: the task was split into the sub-issues it lists.
+- `SCOPE_FAILED`: it could not judge or split the task.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

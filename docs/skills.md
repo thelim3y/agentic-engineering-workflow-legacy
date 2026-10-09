@@ -4,6 +4,16 @@
 
 The orchestrator and the entry point: `/ticket <GitHub issue or pasted text>`. It runs the Planner, the TDD agent, the Implementer, the Reviewer and, if enabled, the Merger in order. A pull request that is not approved goes back to the Implementer.
 
+## pull-issue
+
+Used by `ticket` when the ticket is a GitHub issue and not pasted text. It picks one issue by the rules in `issues.md` and claims it. Both arguments are optional:
+
+- **An issue number:** use that issue. If it is not eligible, say why and stop; never substitute another.
+- **An epic number:** take the first eligible child of that epic.
+- **Nothing:** take the first eligible issue the search returns.
+
+It returns the issue in full, with the body of its parent epic.
+
 ## tdd
 
 Used by the TDD agent and the Implementer. Every change follows a red, green, refactor loop:

@@ -10,3 +10,7 @@ Every agent reads memory. Only test-runner and pr-reviewer write to it, because 
 
 - test-runner records repeated failures.
 - pr-reviewer records repeated findings.
+
+## When an item counts as repeated
+
+The first time an agent sees an item, it saves it with a count of one. Each later sighting of the same item, saved under the same topic key, raises the count. An item is a lesson once its count reaches two, and agents reading memory ignore entries below two.

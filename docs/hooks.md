@@ -32,6 +32,10 @@ An agent on a list may also run plain reads: `ls`, `cat`, `head`, `tail`, `wc`, 
 | merge-evaluator | Read-only `gh pr` commands |
 | merger-mage | `gh pr view`, `gh pr merge`, `gh issue close`, and `gh api` reads of the sub-issues endpoint |
 
+## Running as the AI account
+
+If `agentic.toml` has a `[github]` section, the hook also rewrites each agent's `Bash` command so that it runs as that account. It puts `export` of `GH_TOKEN` (taken from the variable `github.token_env` names), the git author and committer name and email, and `GIT_SSH_COMMAND` with the account's key in front of the command. The token is passed as a reference to the variable and is never written into the command or the log. If the variable is not set, the command is denied, so nothing runs as you by mistake. The rewrite does not decide permission, so the usual permission rules still apply to the rewritten command. The main session is not rewritten.
+
 ## Dry run
 
 While a `dry-run` file exists in `<paths.runs>/<ticket>/` of the worktree, the same hook also denies, for every caller including the main session:

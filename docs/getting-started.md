@@ -68,6 +68,17 @@ In the project you want to run the workflow on:
 
    A ticket pasted as text needs none of this.
 
+### Optional: run the agents as their own GitHub account
+
+So that branches, commits and pull requests show an AI account and not you, and so that you can approve pull requests yourself:
+
+1. Create a GitHub **machine account** by hand. GitHub's terms allow one free machine account besides your personal one, used only for automation. You stay responsible for it.
+2. Give it write access to the project, add an SSH key for it, and create a fine-grained token with contents, pull requests and issues permissions.
+3. Export the token as `AGENTIC_GH_TOKEN` in the shell where you run Claude Code.
+4. Add a `[github]` section to `agentic.toml`, as `config.md` shows.
+
+Pull requests then come from the AI account, and you approve them from your own account, which satisfies `merge.human_review`.
+
 ## 4. Start Claude Code with the plugin
 
 ```bash

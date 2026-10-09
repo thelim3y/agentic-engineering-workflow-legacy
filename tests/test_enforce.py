@@ -332,5 +332,67 @@ class ReadOnlyCommands(unittest.TestCase):
         self.assertEqual(bash("task-scoper", "ls && git push")[0], "deny")
 
 
+GITHUB = ('[github]\ntoken_env = "AGENTIC_GH_TOKEN"\nssh_key = "/k/ai_key"\n'
+          'author_name = "AI Bot"\nauthor_email = "ai@example.com"\n')
+
+
+def account(agent, command, config=GITHUB, env=None, tool="Bash"):
+    with tempfile.TemporaryDirectory() as project:
+        if config:
+            (pathlib.Path(project) / "agentic.toml").write_text(config)
+        event = {"cwd": project, "tool_name": tool,
+                 "tool_input": {"command": command}}
+        if agent:
+            event["agent_type"] = agent
+        base = {k: v for k, v in __import__("os").environ.items()
+                if k != "AGENTIC_GH_TOKEN"}
+        base.update(env or {})
+        done = subprocess.run([sys.executable, str(SCRIPT)],
+                              input=json.dumps(event), capture_output=True,
+                              text=True, env=base)
+        out = done.stdout.strip()
+        return json.loads(out)["hookSpecificOutput"] if out else None
+
+
+class Account(unittest.TestCase):
+    TOKEN = {"AGENTIC_GH_TOKEN": "secret-token-value"}
+
+    def test_without_a_github_section_nothing_is_rewritten(self):
+        self.assertIsNone(account("pr-create", "git push", config=""))
+
+    def test_an_agent_command_runs_as_the_configured_account(self):
+        out = account("pr-create", "git push -u origin x", env=self.TOKEN)
+        command = out["updatedInput"]["command"]
+        self.assertTrue(command.endswith("git push -u origin x"))
+        for part in ("GIT_AUTHOR_NAME='AI Bot'", "GIT_COMMITTER_NAME='AI Bot'",
+                     "GIT_AUTHOR_EMAIL=ai@example.com",
+                     "GIT_COMMITTER_EMAIL=ai@example.com",
+                     "GIT_SSH_COMMAND='ssh -i /k/ai_key -o IdentitiesOnly=yes'"):
+            self.assertIn(part, command)
+
+    def test_the_token_is_passed_by_reference_never_by_value(self):
+        out = account("pr-create", "gh pr create", env=self.TOKEN)
+        command = out["updatedInput"]["command"]
+        self.assertIn('GH_TOKEN="$AGENTIC_GH_TOKEN"', command)
+        self.assertNotIn("secret-token-value", json.dumps(out))
+
+    def test_rewriting_does_not_decide_permission(self):
+        out = account("pr-create", "gh pr create", env=self.TOKEN)
+        self.assertNotIn("permissionDecision", out)
+
+    def test_a_missing_token_variable_is_denied_not_run_as_the_user(self):
+        out = account("pr-create", "gh pr create", env={})
+        self.assertEqual(out["permissionDecision"], "deny")
+        self.assertIn("AGENTIC_GH_TOKEN", out["permissionDecisionReason"])
+
+    def test_the_main_session_is_not_rewritten(self):
+        self.assertIsNone(account(None, "gh pr view 1", env=self.TOKEN))
+
+    def test_a_denied_command_is_still_denied(self):
+        out = account("code-fu", "git push", env=self.TOKEN)
+        self.assertEqual(out["permissionDecision"], "deny")
+        self.assertNotIn("updatedInput", out)
+
+
 if __name__ == "__main__":
     unittest.main()

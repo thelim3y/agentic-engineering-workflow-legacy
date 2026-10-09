@@ -31,6 +31,19 @@ parent = "parent-issue"
 cheaper = "sonnet"
 stronger = "opus"
 
+[github]
+# Optional. When any of these is set, the hook runs the agents' commands as
+# this account, so branches, commits, issue claims and pull requests show the
+# AI account and not you. Leave the section out to run as yourself.
+# The name of the environment variable that holds the account's token. The
+# token itself never goes in this file.
+token_env = "AGENTIC_GH_TOKEN"
+# The account's own SSH key, used for git over SSH.
+ssh_key = "~/.ssh/ai_key"
+# The commit identity of the account.
+author_name = "AI Bot"
+author_email = "ai@example.com"
+
 [paths]
 # The folder that holds each run's reports. It is not committed.
 runs = ".agentic"

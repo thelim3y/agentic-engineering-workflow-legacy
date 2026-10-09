@@ -236,6 +236,36 @@ def check_dry_run(event):
                         "never does.")
 
 
+def run_as_account(agent, event):
+    """Rewrite an agent's command to run as the configured GitHub account."""
+    github = load_config(event.get("cwd", ".")).get("github")
+    if not github:
+        return
+    exports = []
+    token_env = github.get("token_env")
+    if token_env:
+        if not os.environ.get(token_env):
+            return deny(agent, f"${token_env} is not set, so this command "
+                        "would run as you and not as the AI account.")
+        exports.append(f'GH_TOKEN="${token_env}"')
+    name, email = github.get("author_name"), github.get("author_email")
+    if name:
+        exports += [f"GIT_AUTHOR_NAME={shlex.quote(name)}",
+                    f"GIT_COMMITTER_NAME={shlex.quote(name)}"]
+    if email:
+        exports += [f"GIT_AUTHOR_EMAIL={shlex.quote(email)}",
+                    f"GIT_COMMITTER_EMAIL={shlex.quote(email)}"]
+    if github.get("ssh_key"):
+        ssh = f"ssh -i {github['ssh_key']} -o IdentitiesOnly=yes"
+        exports.append(f"GIT_SSH_COMMAND={shlex.quote(ssh)}")
+    if not exports:
+        return
+    command = "export " + " ".join(exports) + "; " + event["tool_input"]["command"]
+    print(json.dumps({"hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "updatedInput": dict(event["tool_input"], command=command)}}))
+
+
 def main():
     event = json.load(sys.stdin)
     log = os.environ.get("AGENTIC_HOOK_LOG")
@@ -252,6 +282,8 @@ def main():
         check_file(agent, event)
     elif tool == "Bash":
         check_command(agent, event)
+        if agent in AGENTS:
+            run_as_account(agent, event)
 
 
 if __name__ == "__main__":

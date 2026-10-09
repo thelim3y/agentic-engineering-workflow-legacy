@@ -13,4 +13,8 @@ Every agent reads memory. Only test-runner and pr-reviewer write to it, because 
 
 ## When an item counts as repeated
 
-The first time an agent sees an item, it saves it with a count of one. Each later sighting of the same item, saved under the same topic key, raises the count. An item is a lesson once its count reaches two, and agents reading memory ignore entries below two.
+The first time an agent sees an item, it saves it with a count of one. Each later sighting of the same item, saved under the same topic key, raises the count. A lesson is an item whose count has reached two. Agents reading memory ignore entries below two.
+
+## Scope
+
+A lesson belongs to one project. Nothing is shared across projects.

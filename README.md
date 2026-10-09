@@ -1,38 +1,50 @@
 # agentic-engineering-workflow
 
-Project-agnostic SDLC agents and skills that carry a ticket to a merged pull request.
+Project-agnostic SDLC agents and skills that carry a ticket, from a GitHub issue or pasted text, to a merged pull request: planning, with large tasks split into sub-issues; test-driven implementation; review; and an optional final check and merge.
 
 ## What it does
 
-A ticket comes in as a GitHub issue or as pasted text. The workflow takes it through:
+A ticket comes in as a GitHub issue or as pasted text. Nine agents, each with one task, take it through:
 
-1. **Intake.** The ticket is read from the issue or from the pasted text.
-2. **Planning.** The task is planned.
-3. **Splitting.** A task that is too large is split into sub-issues, and each sub-issue is planned in turn.
-4. **Tests first.** The TDD agent writes the tests that define the task before any code.
-5. **Coding.** The Implementer writes the code that passes those tests.
-6. **Testing.** The full test suite is run.
-7. **Pull request review.** A reviewer agent reads the pull request.
-8. **Final check and merge.** An optional agent makes the last checks and merges.
+1. **Intake.** The `pull-issue` skill picks an issue, or the ticket is pasted.
+2. **Scoping.** `task-scoper` decides whether the task is too large and splits it into sub-issues if so.
+3. **Planning.** `task-planner` plans one right-sized task.
+4. **Tests first.** `tdd-maestro` writes the failing tests.
+5. **Coding.** `code-fu` writes the code that passes them.
+6. **Testing.** `test-runner` runs the tests and reports.
+7. **Pull request.** `pr-create` makes the pull request.
+8. **Review.** `pr-reviewer` reviews it.
+9. **Merge check.** `merge-evaluator` decides whether it can be merged.
+10. **Merge.** `merger-mage` merges it. This stage is optional.
 
-It is built from agents and skills, and it does not assume any one project.
+Any agent can also stop with `BLOCKED` or `NEEDS_USER`.
 
 ## Flow
 
 ```mermaid
 flowchart TD
-    ticket["Intake<br/>GitHub issue or pasted text"] --> plan["Planning<br/>Planner"]
-    plan --> large{"Too large?"}
-    large -- yes --> split["Split into sub-issues"]
-    split --> plan
-    large -- no --> tests["Tests first<br/>TDD agent"]
-    tests --> code["Coding<br/>Implementer"]
-    code -. "test looks wrong" .-> tests
-    code --> test["Testing"]
-    test --> pr["Open the pull request"]
-    pr --> review["Review<br/>Reviewer"]
-    review --> ok{"Approved?"}
-    ok -- no --> code
-    ok -- yes --> merge["Final check and merge<br/>Merger, optional"]
+    ticket["Ticket<br/>pull-issue skill or pasted text"] --> scope["task-scoper"]
+    scope -- FITS --> plan["task-planner"]
+    scope -- SPLIT --> subs["Each sub-issue"] --> plan
+    plan --> tests["tdd-maestro<br/>tests first"]
+    tests --> code["code-fu"]
+    code -. TEST_DISPUTED .-> tests
+    code --> run["test-runner"]
+    run -- FAIL --> code
+    run -- PASS --> pr["pr-create"]
+    pr --> review["pr-reviewer"]
+    review -- CHANGES_NEEDED --> code
+    review -- APPROVED --> eval["merge-evaluator"]
+    eval -- NOT_MERGEABLE --> stop(["Stop and report"])
+    eval -- MERGEABLE --> merge["merger-mage<br/>optional"]
     merge --> done(["Merged"])
 ```
+
+## Documents
+
+- `docs/agents.md`: the agents, their tasks and model tiers.
+- `docs/skills.md`: the skills.
+- `docs/issues.md`: the rules for the issues the workflow works on.
+- `docs/verdicts.md`: the verdicts agents return.
+- `docs/abort-criteria.md`: when an agent gives up.
+- `docs/config.md`: `agentic.toml` and its settings.

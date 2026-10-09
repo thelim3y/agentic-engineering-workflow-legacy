@@ -25,6 +25,7 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Never assume a check passed.
 - List every gap.
 - Edit nothing.
+- Run no tests; take test results from `run.md`.
 
 ## Verdicts
 

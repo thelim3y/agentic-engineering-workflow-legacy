@@ -24,6 +24,7 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Never assume a check passed.
 - List every condition that fails.
 - In a dry run there is no pull request. Check what you can from the reports: that `run.md` shows a pass and `review.md` an approval. List each condition that needs GitHub as not checkable in a dry run, and return `MERGEABLE` if every condition you could check holds.
+- Run no tests; take test results from `run.md`.
 
 ## Verdicts
 

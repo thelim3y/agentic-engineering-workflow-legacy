@@ -24,6 +24,7 @@ The rules for every agent are in `rules.md`. This agent also follows:
 - Cite a file and line for every finding.
 - Edit nothing.
 - In a dry run there is no pull request. Review the local diff against the default branch with `git diff`, and write the same report.
+- Run no tests; take test results from `run.md`.
 
 ## Verdicts
 

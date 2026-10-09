@@ -39,8 +39,12 @@ COMMAND_RULES = {
 MEM_SAVE = ("mcp__engram__mem_save", "mcp__plugin_engram_engram__mem_save")
 AGENTS = set(COMMAND_RULES) | {"task-planner"}
 READ_ONLY_COMMANDS = {"ls", "cat", "head", "tail", "wc", "pwd", "grep", "rg",
-                      "find", "stat", "diff", "sort", "uniq", "tree", "file"}
-READ_ONLY_GIT = [("git", "ls-files"), ("git", "rev-parse")]
+                      "find", "stat", "diff", "sort", "uniq", "tree", "file",
+                      "cd", "echo", "printf", "true", "test", "["}
+READ_ONLY_GIT = [("git", "ls-files"), ("git", "rev-parse"), ("git", "status"),
+                 ("git", "log"), ("git", "diff"), ("git", "show")]
+CONTROL_PREFIXES = {"do", "then", "else", "if", "elif", "while", "until"}
+CONTROL_ONLY = {"for", "done", "fi"}
 
 
 def agent_name(event):
@@ -183,7 +187,9 @@ def segments(command):
             words = part.split()
         while words and re.match(r"[A-Za-z_][A-Za-z0-9_]*=", words[0]):
             words = words[1:]
-        if words:
+        while words and words[0] in CONTROL_PREFIXES:
+            words = words[1:]
+        if words and words[0] not in CONTROL_ONLY:
             yield words
 
 

@@ -300,6 +300,27 @@ class ReadOnlyCommands(unittest.TestCase):
             self.assertIsNone(bash("task-scoper", command), command)
             self.assertIsNone(bash("pr-evaluator", command), command)
 
+    def test_harmless_shell_and_loops_are_allowed(self):
+        for command in ("cd .agentic/2 && ls", "echo ---", "printf x",
+                        "for f in a b; do cat $f; done",
+                        "if [ -f a ]; then cat a; fi",
+                        "git status --short", "git log -1", "git diff HEAD",
+                        "git show HEAD"):
+            self.assertIsNone(bash("pr-reviewer", command), command)
+            self.assertIsNone(bash("committer", command), command)
+
+    def test_a_condition_does_not_hide_a_denied_command(self):
+        self.assertEqual(
+            bash("pr-evaluator", "if git push; then true; fi")[0], "deny")
+        self.assertEqual(
+            bash("pr-evaluator", "while git push; do true; done")[0], "deny")
+
+    def test_a_loop_does_not_hide_a_denied_command(self):
+        self.assertEqual(
+            bash("pr-evaluator", "for f in a; do git push; done")[0], "deny")
+        self.assertEqual(
+            bash("task-scoper", "if true; then git commit -m x; fi")[0], "deny")
+
     def test_find_that_deletes_or_executes_is_denied(self):
         self.assertEqual(bash("task-scoper", "find . -delete")[0], "deny")
         self.assertEqual(bash("task-scoper", "find . -exec rm {} ;")[0], "deny")

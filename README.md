@@ -17,7 +17,7 @@ A ticket comes in as a GitHub issue or as pasted text. Nine agents, each with on
 9. **Merge check.** `merge-evaluator` decides whether it can be merged.
 10. **Merge.** `merger-mage` merges it. This stage is optional.
 
-Any agent can also stop with `BLOCKED` or `NEEDS_USER`.
+Any agent can also stop with `BLOCKED` or `NEEDS_USER`. Agents pass reports to each other as files, and lessons from earlier runs come from memory.
 
 ## Flow
 
@@ -45,7 +45,9 @@ flowchart TD
 - `docs/agents.md`: the agents, each with its own doc in `docs/agents/`.
 - `docs/rules.md`, `docs/abort-criteria.md`, `docs/user-input-criteria.md`: what holds for every agent.
 - `docs/verdicts.md`: the verdicts agents return.
+- `docs/reports.md`: the report each agent writes and reads in a run.
+- `docs/memory.md`: the engram memory that carries lessons between runs.
 - `docs/hooks.md`: the hook that enforces file and command limits.
-- `docs/skills.md`: the skills.
+- `docs/skills.md`: the skills, with `docs/skills/` for `pull-issue`, `tdd` and `pr-handoff`.
 - `docs/issues.md`: the rules for the issues the workflow works on.
 - `docs/config.md`: `agentic.toml` and its settings.

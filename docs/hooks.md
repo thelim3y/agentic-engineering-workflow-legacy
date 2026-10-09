@@ -35,10 +35,8 @@ The `ticket` skill, with `pull-issue`, runs in the main session. There the hook 
 | Command | Used for |
 |---|---|
 | `mkdir` | Creating the run folder |
-| `git fetch` | Updating the default branch |
-| `git switch -c` | Creating the branch |
+| `git rev-parse` | Checking whether it is in a linked worktree |
 | `git status` | Checking the working tree is clean |
-| `gh repo view` | Finding the default branch |
 | `gh issue list` and `gh issue view` | Finding and reading the issue |
 | `gh api` reads of the sub-issues endpoint | Finding the open sub-issues of a parent issue |
 | `gh issue edit` | Assigning the issue to the user |

@@ -130,5 +130,27 @@ class CommandRules(unittest.TestCase):
         self.assertEqual(bash("code-fu", "A=1 git push")[0], "deny")
 
 
+class Worktree(unittest.TestCase):
+    def test_agentic_toml_is_found_in_the_main_checkout(self):
+        with tempfile.TemporaryDirectory() as root:
+            main = pathlib.Path(root) / "main"
+            tree = pathlib.Path(root) / "tree"
+            main.mkdir()
+            git = lambda *a: subprocess.run(
+                ["git", "-C", str(main), "-c", "user.name=t",
+                 "-c", "user.email=t@t", *a], check=True, capture_output=True)
+            git("init", "-q")
+            git("commit", "-q", "--allow-empty", "-m", "x")
+            git("worktree", "add", "-q", str(tree))
+            (main / "agentic.toml").write_text('[paths]\ntests = ["tests/**"]\n')
+            event = {"cwd": str(tree), "agent_type": "tdd-maestro",
+                     "tool_name": "Edit",
+                     "tool_input": {"file_path": "tests/a_test.py"}}
+            done = subprocess.run([sys.executable, str(SCRIPT)],
+                                  input=json.dumps(event), capture_output=True,
+                                  text=True)
+            self.assertEqual(done.stdout.strip(), "")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -9,6 +9,7 @@ import json
 import pathlib
 import re
 import shlex
+import subprocess
 import sys
 import tomllib
 
@@ -67,12 +68,27 @@ def glob_regex(pattern):
     return re.compile(out + r"\Z")
 
 
-def test_globs(cwd):
+def config_dirs(cwd):
+    """The directory itself, then the main checkout when it is a worktree."""
+    yield pathlib.Path(cwd)
     try:
-        with open(pathlib.Path(cwd) / "agentic.toml", "rb") as f:
-            return tomllib.load(f).get("paths", {}).get("tests") or []
-    except (OSError, tomllib.TOMLDecodeError):
-        return []
+        common = subprocess.run(
+            ["git", "-C", str(cwd), "rev-parse", "--path-format=absolute",
+             "--git-common-dir"], capture_output=True, text=True, check=True
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return
+    yield pathlib.Path(common).parent
+
+
+def test_globs(cwd):
+    for directory in config_dirs(cwd):
+        try:
+            with open(directory / "agentic.toml", "rb") as f:
+                return tomllib.load(f).get("paths", {}).get("tests") or []
+        except (OSError, tomllib.TOMLDecodeError):
+            continue
+    return []
 
 
 def relative(path, cwd):

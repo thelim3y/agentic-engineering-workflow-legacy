@@ -24,6 +24,8 @@ cheaper = "haiku"
 stronger = "sonnet"
 
 [paths]
+# The folder that holds each run's reports. It is not committed.
+runs = ".agentic"
 # Globs of the project's test files. tdd-maestro may edit only these, and
 # code-fu may edit none of them. No default: the hook denies both until it is set.
 tests = ["tests/**"]

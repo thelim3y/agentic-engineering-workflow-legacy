@@ -21,7 +21,9 @@ If `paths.tests` is not set, the hook denies both agents' edits and says to set 
 | tdd-maestro | Build and test commands; no `git push` and no `gh` |
 | code-fu | Build and test commands; no `git push` and no `gh` |
 | test-runner | Build and test commands; no `git` and no `gh` |
-| pr-create | `git status`, `git log`, `git diff`, `git push` and `gh pr create` |
+| pr-evaluator | `git status`, `git diff` and `git log` |
+| committer | `git status`, `git diff`, `git add` and `git commit` |
+| pr-create | `git status`, `git log`, `git push` and `gh pr create` |
 | pr-reviewer | `git diff`, `git log` and read-only `gh pr` commands |
 | merge-evaluator | Read-only `gh pr` commands |
 | merger-mage | `gh pr view`, `gh pr merge`, `gh issue close`, and `gh api` reads of the sub-issues endpoint |

@@ -24,7 +24,9 @@ An agent that mostly reads text and finds things in it runs on the cheaper model
 | [tdd-maestro](agents/tdd-maestro.md) | Write the failing tests, and own them |
 | [code-fu](agents/code-fu.md) | Write the code that passes the tests |
 | [test-runner](agents/test-runner.md) | Run the tests and report |
-| [pr-create](agents/pr-create.md) | Make the pull request |
+| [pr-evaluator](agents/pr-evaluator.md) | Decide whether the work is ready for a pull request |
+| [committer](agents/committer.md) | Make the one commit for the ticket |
+| [pr-create](agents/pr-create.md) | Push the branch and open the pull request |
 | [pr-reviewer](agents/pr-reviewer.md) | Review the pull request |
 | [merge-evaluator](agents/merge-evaluator.md) | Decide whether the pull request can be merged |
 | [merger-mage](agents/merger-mage.md) | Merge it (optional) |

@@ -2,7 +2,7 @@
 
 ## Summary
 
-Use when the suite passes, to push the branch and open the pull request.
+Use when the work is committed, to push the branch and open the pull request.
 
 ## Goal
 
@@ -35,14 +35,14 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 The report format is in `reports.md`.
 
 - **Writes** `pr.md`: The pull request number and link, and the branch.
-- **Reads:** `plan.md`, `tests.md` and `run.md`.
+- **Reads:** `commit.md`, `plan.md`, `tests.md` and `run.md`.
 
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:
 
 - Pushing or creating the pull request fails (`TOOLING_FAILURE`).
-- The branch has no commits (`DEPENDENCY_BLOCKED`).
+- The branch has no commit (`DEPENDENCY_BLOCKED`).
 
 ## User input criteria
 

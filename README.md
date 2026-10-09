@@ -4,7 +4,7 @@ Project-agnostic SDLC agents and skills that carry a ticket, from a GitHub issue
 
 ## What it does
 
-A ticket comes in as a GitHub issue or as pasted text. Nine agents, each with one task, take it through:
+A ticket comes in as a GitHub issue or as pasted text. Eleven agents, each with one task, take it through:
 
 1. **Intake.** The `pull-issue` skill picks an issue, or the ticket is pasted.
 2. **Scoping.** `task-scoper` decides whether the task is too large and splits it into sub-issues if so.
@@ -12,10 +12,12 @@ A ticket comes in as a GitHub issue or as pasted text. Nine agents, each with on
 4. **Tests first.** `tdd-maestro` writes the failing tests.
 5. **Coding.** `code-fu` writes the code that passes them.
 6. **Testing.** `test-runner` runs the tests and reports.
-7. **Pull request.** `pr-create` makes the pull request.
-8. **Review.** `pr-reviewer` reviews it.
-9. **Merge check.** `merge-evaluator` decides whether it can be merged.
-10. **Merge.** `merger-mage` merges it. This stage is optional.
+7. **Readiness.** `pr-evaluator` decides whether the work is ready for a pull request.
+8. **Commit.** `committer` makes the one commit for the ticket.
+9. **Pull request.** `pr-create` pushes the branch and opens the pull request.
+10. **Review.** `pr-reviewer` reviews it.
+11. **Merge check.** `merge-evaluator` decides whether it can be merged.
+12. **Merge.** `merger-mage` merges it. This stage is optional.
 
 Any agent can also stop with `BLOCKED` or `NEEDS_USER`. Agents pass reports to each other as files, and lessons from earlier runs come from memory.
 
@@ -31,7 +33,10 @@ flowchart TD
     code -. TEST_DISPUTED .-> tests
     code --> run["test-runner"]
     run -- FAIL --> code
-    run -- PASS --> pr["pr-create"]
+    run -- PASS --> ready["pr-evaluator"]
+    ready -- NOT_READY --> code
+    ready -- READY --> commit["committer"]
+    commit --> pr["pr-create"]
     pr --> review["pr-reviewer"]
     review -- CHANGES_NEEDED --> code
     review -- APPROVED --> eval["merge-evaluator"]

@@ -17,8 +17,11 @@ The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number,
 | tdd-maestro | `TESTS_WRITTEN`, `TEST_KEPT`, `TEST_CHANGED` | code-fu |
 | code-fu | `CODED` | test-runner |
 | | `TEST_DISPUTED` | tdd-maestro |
-| test-runner | `PASS` | pr-create |
+| test-runner | `PASS` | pr-evaluator |
 | | `FAIL` | code-fu |
+| pr-evaluator | `READY` | committer |
+| | `NOT_READY` | code-fu |
+| committer | `COMMITTED` | pr-create |
 | pr-create | `PR_CREATED` | pr-reviewer |
 | pr-reviewer | `APPROVED` | merge-evaluator |
 | | `CHANGES_NEEDED` | code-fu |
@@ -26,7 +29,7 @@ The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number,
 | | `NOT_MERGEABLE` | code-fu |
 | merger-mage | `MERGED` | End |
 
-Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `CHANGES_NEEDED` or `NOT_MERGEABLE` that sends the work back to code-fu `limits.retries` times in a row stops it with `RETRY_LIMIT`.
+Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `NOT_READY`, `CHANGES_NEEDED` or `NOT_MERGEABLE` that sends the work back to code-fu `limits.retries` times in a row stops it with `RETRY_LIMIT`.
 
 ## pull-issue
 

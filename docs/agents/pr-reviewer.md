@@ -14,7 +14,7 @@ A pull request that meets the task's goal, or comes back with the specific chang
 
 ## Model
 
-The stronger tier: `models.stronger` in `agentic.toml`.
+The stronger tier: `models.stronger_tier` in `agentic.toml`.
 
 ## Rules
 

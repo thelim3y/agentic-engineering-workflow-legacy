@@ -14,7 +14,7 @@ A pull request a reviewer can read without asking questions.
 
 ## Model
 
-The cheaper tier: `models.cheaper` in `agentic.toml`.
+The cheaper tier: `models.cheaper_tier` in `agentic.toml`.
 
 ## Rules
 

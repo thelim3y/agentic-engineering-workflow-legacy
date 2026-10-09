@@ -6,9 +6,9 @@ The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number,
 
 1. **Intake.** With pasted text, that text is the ticket. Otherwise it runs `pull-issue` with the issue or epic given.
 2. **Worktree.** As soon as it has the ticket, it makes sure it is working in a linked git worktree, never in the main checkout. If it is not in one, it enters a new one, named from the ticket's number and title, or from its first line for pasted text. The worktree branches from the repository's default branch. For an issue, it then comments on the issue with the branch name.
-3. **Run the agents** in the order below. It creates the run folder `<paths.runs>/<ticket>/` first. After each agent it reads the verdict at the top of that agent's report and goes to the next agent in the table, giving it the paths of the reports its doc says it reads. It does nothing else: it plans, codes and reviews nothing itself.
+3. **Run the agents** in the order below. It creates the run folder `<paths.run_folder>/<ticket>/` first. After each agent it reads the verdict at the top of that agent's report and goes to the next agent in the table, giving it the paths of the reports its doc says it reads. It does nothing else: it plans, codes and reviews nothing itself.
 4. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed.
-5. **Keep the reports.** In a real run on an issue, it comments on the issue with each report in a collapsible block. In a dry run it copies the run folder into the main checkout, to `<paths.runs>/agentic-engineering-workflow/dry-runs/<ticket>/`, and only once the copy is confirmed removes the worktree, discarding its commit.
+5. **Keep the reports.** In a real run on an issue, it comments on the issue with each report in a collapsible block. In a dry run it copies the run folder into the main checkout, to `<paths.run_folder>/agentic-engineering-workflow/dry-runs/<ticket>/`, and only once the copy is confirmed removes the worktree, discarding its commit.
 
 | Agent | Verdict | Next |
 |---|---|---|
@@ -26,11 +26,11 @@ The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number,
 | pr-create | `PR_CREATED` | pr-reviewer |
 | pr-reviewer | `APPROVED` | merge-evaluator |
 | | `CHANGES_NEEDED` | code-fu |
-| merge-evaluator | `MERGEABLE` | merger-mage, or End if `merge.enabled` is false |
+| merge-evaluator | `MERGEABLE` | merger-mage, or End if `merge.merge_automatically` is false |
 | | `NOT_MERGEABLE` | code-fu |
 | merger-mage | `MERGED` | End |
 
-Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `NOT_READY`, `CHANGES_NEEDED` or `NOT_MERGEABLE` that sends the work back to code-fu `limits.retries` times in a row stops it with `RETRY_LIMIT`.
+Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `NOT_READY`, `CHANGES_NEEDED` or `NOT_MERGEABLE` that sends the work back to code-fu `limits.rework_loops` times in a row stops it with `RETRY_LIMIT`.
 
 ## pull-issue
 

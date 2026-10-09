@@ -12,7 +12,7 @@ The arguments are: $ARGUMENTS
 
 ## Settings
 
-Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.retries` 3, `limits.max_files` 5, `labels.ready` `ai-ready`, `labels.epic` `epic`, `labels.parent` `parent-issue`, `models.stronger` `opus`, `models.cheaper` `sonnet`, `paths.runs` `.agentic`, `merge.enabled` true, `merge.method` `rebase`, `merge.human_review` true.
+Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.attempts_per_step` 3, `limits.rework_loops` 3, `limits.max_files_per_task` 5, `labels.ai_ready` `ai-ready`, `labels.epic` `epic`, `labels.parent_issue` `parent-issue`, `models.stronger_tier` `opus`, `models.cheaper_tier` `sonnet`, `paths.run_folder` `.agentic`, `merge.merge_automatically` true, `merge.merge_method` `rebase`, `merge.require_human_review` true.
 
 ## Dry run
 
@@ -22,16 +22,16 @@ If the arguments hold `dry-run`, this is a dry run. Everything runs in the workt
 
 1. **Intake.** If the arguments hold ticket text that is not an issue number or `epic=N`, that text is the ticket. Otherwise run the `pull-issue` skill with the issue or epic given, and the issue it returns is the ticket.
 2. **Worktree.** Work only inside a linked git worktree, never in the main checkout. Compare `git rev-parse --git-dir` with `git rev-parse --git-common-dir`; if they differ, you are in one. If not, use the `EnterWorktree` tool to create one, named from the ticket's number and title, or from its first line for pasted text. It branches from the repository's default branch, and the branch is `worktree-<name>`. For an issue, comment on it with the branch name, unless this is a dry run.
-3. **Run folder.** Create `<paths.runs>/<ticket>/`, where `<ticket>` is the issue number or a short name from the first line. In a dry run, create an empty `dry-run` file in it with `touch`, before anything else.
-4. **Run the agents** in the order of the table below. Launch each with the Agent tool. Give it the ticket, the run folder, and the report paths its definition says it reads. For task-scoper, also give `limits.max_files`. For merge-evaluator, also give `merge.human_review`. For merger-mage, also give `merge.method`. Set the model from its tier: `models.stronger` for task-scoper, task-planner, tdd-maestro, code-fu, pr-evaluator and pr-reviewer, and `models.cheaper` for test-runner, committer, pr-create, merge-evaluator and merger-mage.
+3. **Run folder.** Create `<paths.run_folder>/<ticket>/`, where `<ticket>` is the issue number or a short name from the first line. In a dry run, create an empty `dry-run` file in it with `touch`, before anything else.
+4. **Run the agents** in the order of the table below. Launch each with the Agent tool. Give it the ticket, the run folder, and the report paths its definition says it reads. Give every agent `limits.attempts_per_step`. For task-scoper, also give `limits.max_files_per_task`. For merge-evaluator, also give `merge.require_human_review`. For merger-mage, also give `merge.merge_method`. Set the model from its tier: `models.stronger_tier` for task-scoper, task-planner, tdd-maestro, code-fu, pr-evaluator and pr-reviewer, and `models.cheaper_tier` for test-runner, committer, pr-create, merge-evaluator and merger-mage.
 5. **Read the verdict** on the first line of the agent's report, go to the next agent in the table, and repeat.
 6. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed.
-7. **Keep the reports.** In a real run on an issue, comment on the issue with each report in a collapsible `<details>` block, split across comments if they pass about 60,000 characters. In a dry run, copy the run folder into the main checkout, to `<paths.runs>/agentic-engineering-workflow/dry-runs/<ticket>/`. Do it as separate plain commands, one per call and in order: first `git rev-parse --path-format=absolute --git-common-dir` on its own, whose parent folder is the main checkout; then `mkdir -p` for the destination; then `cp -r`; then `ls` on the destination to confirm. Never put `git` inside `$(...)`, because Claude Code refuses it in a worktree. Only after the copy is confirmed, and never in the same step as the copy, leave the worktree with `ExitWorktree`, action `remove` with `discard_changes` true, because a dry run's commit is meant to be discarded.
+7. **Keep the reports.** In a real run on an issue, comment on the issue with each report in a collapsible `<details>` block, split across comments if they pass about 60,000 characters. In a dry run, copy the run folder into the main checkout, to `<paths.run_folder>/agentic-engineering-workflow/dry-runs/<ticket>/`. Do it as separate plain commands, one per call and in order: first `git rev-parse --path-format=absolute --git-common-dir` on its own, whose parent folder is the main checkout; then `mkdir -p` for the destination; then `cp -r`; then `ls` on the destination to confirm. Never put `git` inside `$(...)`, because Claude Code refuses it in a worktree. Only after the copy is confirmed, and never in the same step as the copy, leave the worktree with `ExitWorktree`, action `remove` with `discard_changes` true, because a dry run's commit is meant to be discarded.
 
 | Agent | Verdict | Next |
 |---|---|---|
 | task-scoper | `FITS` | task-planner |
-| | `SPLIT` | End: the sub-issues wait for the user to add `labels.ready` |
+| | `SPLIT` | End: the sub-issues wait for the user to add `labels.ai_ready` |
 | task-planner | `PLANNED` | tdd-maestro |
 | tdd-maestro | `TESTS_WRITTEN`, `TEST_KEPT`, `TEST_CHANGED` | code-fu |
 | code-fu | `CODED` | test-runner |
@@ -44,8 +44,8 @@ If the arguments hold `dry-run`, this is a dry run. Everything runs in the workt
 | pr-create | `PR_CREATED` | pr-reviewer |
 | pr-reviewer | `APPROVED` | merge-evaluator |
 | | `CHANGES_NEEDED` | code-fu |
-| merge-evaluator | `MERGEABLE` | merger-mage, or End if `merge.enabled` is false |
+| merge-evaluator | `MERGEABLE` | merger-mage, or End if `merge.merge_automatically` is false |
 | | `NOT_MERGEABLE` | code-fu |
 | merger-mage | `MERGED` | End |
 
-Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `NOT_READY`, `CHANGES_NEEDED` or `NOT_MERGEABLE` that sends the work back to code-fu `limits.retries` times in a row stops it with `RETRY_LIMIT`.
+Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `NOT_READY`, `CHANGES_NEEDED` or `NOT_MERGEABLE` that sends the work back to code-fu `limits.rework_loops` times in a row stops it with `RETRY_LIMIT`.

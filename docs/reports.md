@@ -1,6 +1,6 @@
 # Reports
 
-Each agent writes one report file in the run folder, `<paths.runs>/<ticket>/` (`.agentic/<ticket>/` by default), which is not committed. The `ticket` skill gives the next agent the paths of the reports it needs and nothing else.
+Each agent writes one report file in the run folder, `<paths.run_folder>/<ticket>/` (`.agentic/<ticket>/` by default), which is not committed. The `ticket` skill gives the next agent the paths of the reports it needs and nothing else.
 
 Every report starts with the agent's verdict. For `BLOCKED` it names the reason, and for `NEEDS_USER` it holds the question. The rest is facts the agent observed, each with the command or file that shows it.
 

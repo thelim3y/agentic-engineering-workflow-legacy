@@ -48,7 +48,7 @@ A plan that tells the next agents which behaviour to build and what to leave out
 - An input or a thing the task depends on is missing or not ready (`DEPENDENCY_BLOCKED`).
 - You need something outside the repository, such as access (`EXTERNAL_BLOCKED`).
 - The task contradicts the plan, the tests or the project rules (`DESIGN_CONFLICT`).
-- Three attempts at the same step have failed (`RETRY_LIMIT`).
+- The number of attempts at the same step given in your task message have all failed (`RETRY_LIMIT`).
 - The task cannot be planned without breaking a project rule (`DESIGN_CONFLICT`).
 
 ## Ask with `NEEDS_USER` when

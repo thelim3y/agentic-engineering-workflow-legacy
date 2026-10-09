@@ -14,7 +14,7 @@ One commit that holds exactly the work for this ticket, titled from the ticket.
 
 ## Model
 
-The cheaper tier: `models.cheaper` in `agentic.toml`.
+The cheaper tier: `models.cheaper_tier` in `agentic.toml`.
 
 ## Rules
 

@@ -106,7 +106,7 @@ def load_config(cwd):
 
 
 def test_globs(cwd):
-    return load_config(cwd).get("paths", {}).get("tests") or []
+    return load_config(cwd).get("paths", {}).get("test_files") or []
 
 
 def project_root(cwd):
@@ -119,7 +119,7 @@ def project_root(cwd):
 
 
 def dry_run(cwd):
-    runs = load_config(cwd).get("paths", {}).get("runs", ".agentic")
+    runs = load_config(cwd).get("paths", {}).get("run_folder", ".agentic")
     return any((project_root(cwd) / runs).glob("*/dry-run"))
 
 
@@ -160,7 +160,7 @@ def check_file(agent, event):
     cwd = event.get("cwd", ".")
     root = project_root(cwd)
     path = relative(event["tool_input"].get("file_path", ""), root)
-    runs = load_config(cwd).get("paths", {}).get("runs", ".agentic")
+    runs = load_config(cwd).get("paths", {}).get("run_folder", ".agentic")
     if path == runs or path.startswith(runs.rstrip("/") + "/"):
         return
     if agent not in ("tdd-maestro", "code-fu"):
@@ -168,14 +168,14 @@ def check_file(agent, event):
                     "this agent writes only its report there.")
     globs = test_globs(cwd)
     if not globs:
-        return deny(agent, "paths.tests is not set in agentic.toml, so no "
+        return deny(agent, "paths.test_files is not set in agentic.toml, so no "
                     "edit is allowed until it is.")
     is_test = any(glob_regex(g).match(path) for g in globs)
     if agent == "tdd-maestro" and not is_test:
-        return deny(agent, f"{path} is not a test file (paths.tests); "
+        return deny(agent, f"{path} is not a test file (paths.test_files); "
                     "tdd-maestro edits only test files.")
     if agent == "code-fu" and is_test:
-        return deny(agent, f"{path} is a test file (paths.tests); code-fu "
+        return deny(agent, f"{path} is a test file (paths.test_files); code-fu "
                     "edits no test. Return TEST_DISPUTED instead.")
 
 
@@ -242,21 +242,21 @@ def run_as_account(agent, event):
     if not github:
         return
     exports = []
-    token_env = github.get("token_env")
+    token_env = github.get("token_env_var")
     if token_env:
         if not os.environ.get(token_env):
             return deny(agent, f"${token_env} is not set, so this command "
                         "would run as you and not as the AI account.")
         exports.append(f'GH_TOKEN="${token_env}"')
-    name, email = github.get("author_name"), github.get("author_email")
+    name, email = github.get("commit_author_name"), github.get("commit_author_email")
     if name:
         exports += [f"GIT_AUTHOR_NAME={shlex.quote(name)}",
                     f"GIT_COMMITTER_NAME={shlex.quote(name)}"]
     if email:
         exports += [f"GIT_AUTHOR_EMAIL={shlex.quote(email)}",
                     f"GIT_COMMITTER_EMAIL={shlex.quote(email)}"]
-    if github.get("ssh_key"):
-        ssh = f"ssh -i {github['ssh_key']} -o IdentitiesOnly=yes"
+    if github.get("ssh_key_path"):
+        ssh = f"ssh -i {github['ssh_key_path']} -o IdentitiesOnly=yes"
         exports.append(f"GIT_SSH_COMMAND={shlex.quote(ssh)}")
     if not exports:
         return

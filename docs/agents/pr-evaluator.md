@@ -14,7 +14,7 @@ A grounded yes or no on whether the work is complete against the plan and ready 
 
 ## Model
 
-The stronger tier: `models.stronger` in `agentic.toml`.
+The stronger tier: `models.stronger_tier` in `agentic.toml`.
 
 ## Rules
 

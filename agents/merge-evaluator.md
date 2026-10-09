@@ -52,13 +52,13 @@ If your task message says this is a dry run: there is no pull request. Check wha
 - An input or a thing the task depends on is missing or not ready (`DEPENDENCY_BLOCKED`).
 - You need something outside the repository, such as access (`EXTERNAL_BLOCKED`).
 - The task contradicts the plan, the tests or the project rules (`DESIGN_CONFLICT`).
-- Three attempts at the same step have failed (`RETRY_LIMIT`).
+- The number of attempts at the same step given in your task message have all failed (`RETRY_LIMIT`).
 - The CI status cannot be read (`EXTERNAL_BLOCKED`).
 
 ## Ask with `NEEDS_USER` when
 
 - The ticket or plan can be read two ways that give different results, and nothing in the repository settles it.
 - The next step is irreversible, destructive or security-sensitive, or has an effect outside what this workflow does.
-- `merge.human_review` is true in your task message and a human has not approved the pull request.
+- `merge.require_human_review` is true in your task message and a human has not approved the pull request.
 
 Ask one question at a time.

@@ -17,7 +17,7 @@ A task that one pass of plan, tests and code can finish: the original ticket, or
 
 1. If `mem_search` is available, search memory for scoping lessons in this project. Use only entries seen two or more times.
 2. Read the ticket. For an issue, use `gh issue view`.
-3. Judge it. Read the code the ticket touches and estimate the files it would create or change, tests included. Take the limit from `limits.max_files` in your task message, or from `agentic.toml`, or 5. It fits when that is within the limit and one pass can plan, test and code it, and its tests can run on their own.
+3. Judge it. Read the code the ticket touches and estimate the files it would create or change, tests included. Take the limit from `limits.max_files_per_task` in your task message, or from `agentic.toml`, or 5. It fits when that is within the limit and one pass can plan, test and code it, and its tests can run on their own.
 4. If it fits, return `FITS`.
 5. If it is too large, create the sub-issues with `gh issue create` and attach each one to the original as a sub-issue with `gh api` (`POST repos/{owner}/{repo}/issues/{number}/sub_issues` with the new issue's `sub_issue_id`). Each one states its own goal and can be completed and tested on its own. Give them no `ai-ready` label. Then label the original `parent-issue`. Return `SPLIT`.
 6. Write `scope.md` in the run folder. Its first line is `Verdict: <verdict>`. Then say why the task fits or was split, and for a split list the number and title of each sub-issue.
@@ -50,7 +50,7 @@ A task that one pass of plan, tests and code can finish: the original ticket, or
 - The ticket text is missing or empty (`DEPENDENCY_BLOCKED`).
 - You need something outside the repository, such as access (`EXTERNAL_BLOCKED`).
 - The task contradicts the project rules (`DESIGN_CONFLICT`).
-- Three attempts at the same step have failed, or the split pieces are still too large after three attempts (`RETRY_LIMIT`).
+- The number of attempts at the same step given in your task message have all failed, or the split pieces are still too large after that many attempts (`RETRY_LIMIT`).
 
 ## Ask with `NEEDS_USER` when
 

@@ -45,11 +45,11 @@ To use your own project instead:
 
 In the project you want to run the workflow on:
 
-1. Create `agentic.toml` in the project root. Only `paths.tests` is required; everything else has a default (see `config.md`).
+1. Create `agentic.toml` in the project root. Only `paths.test_files` is required; everything else has a default (see `config.md`).
 
    ```toml
    [paths]
-   tests = ["tests/**"]
+   test_files = ["tests/**"]
    ```
 
 2. Add the run folder to `.gitignore`:
@@ -86,7 +86,7 @@ So that branches, commits and pull requests show an AI account and not you, and 
    python3 /path/to/agentic-engineering-workflow/scripts/ai_account.py check
    ```
 
-Pull requests then come from the AI account, and you approve them from your own account, which satisfies `merge.human_review`.
+Pull requests then come from the AI account, and you approve them from your own account, which satisfies `merge.require_human_review`.
 
 ## 4. Start Claude Code with the plugin
 

@@ -19,7 +19,7 @@ The smallest code change that makes those tests pass.
 
 1. If `mem_search` is available, search memory for coding lessons in this project. Use only entries seen two or more times.
 2. Read `plan.md`, `tests.md`, and the latest `run.md`, `ready.md`, `review.md` or `merge.md` that sent the work back.
-3. Make the smallest change that passes the tests, following the `tdd` skill's green and refactor steps. Edit no file matching `paths.tests` in `agentic.toml`.
+3. Make the smallest change that passes the tests, following the `tdd` skill's green and refactor steps. Edit no file matching `paths.test_files` in `agentic.toml`.
 4. Run the check that shows the change works. If you believe a test is wrong, stop and return `TEST_DISPUTED`, naming the test and why.
 5. Write `code.md`: the files changed and the check you ran.
 6. Your final message is the verdict and the path of `code.md`, nothing else.
@@ -52,7 +52,7 @@ The smallest code change that makes those tests pass.
 - An input or a thing the task depends on is missing or not ready (`DEPENDENCY_BLOCKED`).
 - You need something outside the repository, such as access (`EXTERNAL_BLOCKED`).
 - The task contradicts the plan, the tests or the project rules (`DESIGN_CONFLICT`).
-- Three attempts at the same step have failed (`RETRY_LIMIT`).
+- The number of attempts at the same step given in your task message have all failed (`RETRY_LIMIT`).
 - The tests still fail after three attempts (`RETRY_LIMIT`).
 - Only changing a test would make them pass: it returns `TEST_DISPUTED` and does not abort.
 

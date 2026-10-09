@@ -47,10 +47,10 @@ def init(args):
     key = pathlib.Path(args.key).expanduser()
     pub = make_key(key, args.account)
     write_config(pathlib.Path(args.dir) / "agentic.toml", {
-        "account": args.account, "repo": args.repo,
-        "token_env": args.token_env, "ssh_key": args.key,
-        "author_name": args.author_name or args.account,
-        "author_email": args.author_email
+        "ai_account": args.account, "repo": args.repo,
+        "token_env_var": args.token_env, "ssh_key_path": args.key,
+        "commit_author_name": args.author_name or args.account,
+        "commit_author_email": args.author_email
         or f"{args.account}@users.noreply.github.com"})
     invite = run([GH, "api", "-X", "PUT",
                   f"repos/{args.repo}/collaborators/{args.account}",
@@ -73,8 +73,8 @@ Left to do by hand, signed in as {args.account}:
 def check(args):
     config = tomllib.loads((pathlib.Path(args.dir) / "agentic.toml").read_text())
     gh = config["github"]
-    account, repo = gh["account"], gh["repo"]
-    token = os.environ.get(gh["token_env"], "")
+    account, repo = gh["ai_account"], gh["repo"]
+    token = os.environ.get(gh["token_env_var"], "")
     failed = []
 
     def report(ok, ok_text, fix):
@@ -82,8 +82,8 @@ def check(args):
         if not ok:
             failed.append(fix)
 
-    report(bool(token), f"{gh['token_env']} is set",
-           f"{gh['token_env']} is not set. Run: export {gh['token_env']}=<token>")
+    report(bool(token), f"{gh['token_env_var']} is set",
+           f"{gh['token_env_var']} is not set. Run: export {gh['token_env_var']}=<token>")
     if token:
         env = {"GH_TOKEN": token}
         user = run([GH, "api", "user"], env)
@@ -96,7 +96,7 @@ def check(args):
         report(bool(push), f"{account} can write to {repo}",
                f"{account} cannot write to {repo}. Accept the invitation: "
                f"https://github.com/{repo}/invitations")
-    key = str(pathlib.Path(gh["ssh_key"]).expanduser())
+    key = str(pathlib.Path(gh["ssh_key_path"]).expanduser())
     ssh = run([SSH, "-i", key, "-o", "IdentitiesOnly=yes", "-T",
                "git@github.com"])
     report(f"Hi {account}!" in ssh.stdout + ssh.stderr,

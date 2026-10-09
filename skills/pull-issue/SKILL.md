@@ -7,11 +7,11 @@ allowed-tools: Bash(gh issue list *) Bash(gh issue view *) Bash(gh issue edit *)
 
 Pick one issue to work on and claim it. The arguments are: $ARGUMENTS
 
-Settings come from `agentic.toml` (`labels.ready`, `labels.epic`, `labels.parent`), with the defaults `ai-ready`, `epic` and `parent-issue`.
+Settings come from `agentic.toml` (`labels.ai_ready`, `labels.epic`, `labels.parent_issue`), with the defaults `ai-ready`, `epic` and `parent-issue`.
 
 ## Steps
 
-1. List the open issues labelled `labels.ready` and not labelled `labels.epic` or `labels.parent`, with `gh issue list`.
+1. List the open issues labelled `labels.ai_ready` and not labelled `labels.epic` or `labels.parent_issue`, with `gh issue list`.
 2. Keep the eligible ones. An issue is eligible when:
    - every issue listed under its `## Dependencies` heading is closed;
    - no open pull request names it;

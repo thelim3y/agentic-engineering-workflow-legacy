@@ -6,14 +6,14 @@ The hook is at plugin level because hooks in a subagent's frontmatter are ignore
 
 ## File rules
 
-Every agent may write in the run folder, `paths.runs` in `agentic.toml`, which is where reports go. Every agent except the two below is denied a write anywhere else.
+Every agent may write in the run folder, `paths.run_folder` in `agentic.toml`, which is where reports go. Every agent except the two below is denied a write anywhere else.
 
 | Agent | Denied |
 |---|---|
-| tdd-maestro | `Edit` or `Write` on any file that does not match `paths.tests` |
-| code-fu | `Edit` or `Write` on any file that matches `paths.tests` |
+| tdd-maestro | `Edit` or `Write` on any file that does not match `paths.test_files` |
+| code-fu | `Edit` or `Write` on any file that matches `paths.test_files` |
 
-If `paths.tests` is not set, the hook denies both agents' edits and says to set it.
+If `paths.test_files` is not set, the hook denies both agents' edits and says to set it.
 
 ## Command rules
 
@@ -34,11 +34,11 @@ An agent on a list may also run plain reads: `ls`, `cat`, `head`, `tail`, `wc`, 
 
 ## Running as the AI account
 
-If `agentic.toml` has a `[github]` section, the hook also rewrites each agent's `Bash` command so that it runs as that account. It puts `export` of `GH_TOKEN` (taken from the variable `github.token_env` names), the git author and committer name and email, and `GIT_SSH_COMMAND` with the account's key in front of the command. The token is passed as a reference to the variable and is never written into the command or the log. If the variable is not set, the command is denied, so nothing runs as you by mistake. The rewrite does not decide permission, so the usual permission rules still apply to the rewritten command. The main session is not rewritten.
+If `agentic.toml` has a `[github]` section, the hook also rewrites each agent's `Bash` command so that it runs as that account. It puts `export` of `GH_TOKEN` (taken from the variable `github.token_env_var` names), the git author and committer name and email, and `GIT_SSH_COMMAND` with the account's key in front of the command. The token is passed as a reference to the variable and is never written into the command or the log. If the variable is not set, the command is denied, so nothing runs as you by mistake. The rewrite does not decide permission, so the usual permission rules still apply to the rewritten command. The main session is not rewritten.
 
 ## Dry run
 
-While a `dry-run` file exists in `<paths.runs>/<ticket>/` of the worktree, the same hook also denies, for every caller including the main session:
+While a `dry-run` file exists in `<paths.run_folder>/<ticket>/` of the worktree, the same hook also denies, for every caller including the main session:
 
 - `git push`;
 - any `gh` command other than `gh issue view`, `list` and `status`, `gh pr view`, `diff`, `checks`, `list` and `status`, and `gh repo view`;

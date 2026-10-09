@@ -14,7 +14,7 @@ A plan that tells the next agents which behaviour to build and what to leave out
 
 ## Model
 
-The stronger tier: `models.stronger` in `agentic.toml`.
+The stronger tier: `models.stronger_tier` in `agentic.toml`.
 
 ## Rules
 

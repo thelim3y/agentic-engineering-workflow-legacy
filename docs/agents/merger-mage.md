@@ -14,7 +14,7 @@ The approved pull request merged cleanly into the base branch.
 
 ## Model
 
-The cheaper tier: `models.cheaper` in `agentic.toml`.
+The cheaper tier: `models.cheaper_tier` in `agentic.toml`.
 
 ## Rules
 
@@ -22,7 +22,7 @@ The rules for every agent are in `rules.md`. This agent also follows:
 
 - Merge only after `MERGEABLE`.
 - Never force a merge.
-- Merge with `merge.method` from `agentic.toml`, and with a merge commit if the repository does not allow that method.
+- Merge with `merge.merge_method` from `agentic.toml`, and with a merge commit if the repository does not allow that method.
 - Never delete the branch unless told to.
 - After merging, if the issue was the last open sub-issue of a parent issue, close the parent.
 

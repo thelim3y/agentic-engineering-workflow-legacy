@@ -15,7 +15,7 @@ import subprocess
 import sys
 
 FILES = {
-    "agentic.toml": '[limits]\nmax_files = 3\n\n[paths]\ntests = ["tests/**"]\n',
+    "agentic.toml": '[limits]\nmax_files_per_task = 3\n\n[paths]\ntest_files = ["tests/**"]\n',
     ".gitignore": ".agentic/\n__pycache__/\n",
     "README.md": "# Scratch project\n\nA tiny project for trying the "
                  "agentic-engineering-workflow plugin.\n",

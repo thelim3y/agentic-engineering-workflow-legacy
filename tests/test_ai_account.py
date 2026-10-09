@@ -78,14 +78,14 @@ class Init(unittest.TestCase):
     def test_it_writes_the_github_section(self):
         with tempfile.TemporaryDirectory() as root:
             (pathlib.Path(root) / "agentic.toml").write_text(
-                '[limits]\\nretries = 3\\n')
+                '[limits]\\nattempts_per_step = 3\\n')
             init(root, "--author-name", "AI Bot", "--author-email", "a@b.c")
             toml = (pathlib.Path(root) / "agentic.toml").read_text()
-            self.assertIn("retries = 3", toml)
+            self.assertIn("attempts_per_step = 3", toml)
             self.assertIn("[github]", toml)
-            self.assertIn('account = "ai-bot"', toml)
-            self.assertIn('author_name = "AI Bot"', toml)
-            self.assertIn('token_env = "AGENTIC_GH_TOKEN"', toml)
+            self.assertIn('ai_account = "ai-bot"', toml)
+            self.assertIn('commit_author_name = "AI Bot"', toml)
+            self.assertIn('token_env_var = "AGENTIC_GH_TOKEN"', toml)
 
     def test_running_it_again_does_not_duplicate_the_section(self):
         with tempfile.TemporaryDirectory() as root:

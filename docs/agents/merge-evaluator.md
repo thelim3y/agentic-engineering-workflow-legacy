@@ -14,7 +14,7 @@ A grounded yes or no on merging, with every failing condition named.
 
 ## Model
 
-The cheaper tier: `models.cheaper` in `agentic.toml`.
+The cheaper tier: `models.cheaper_tier` in `agentic.toml`.
 
 ## Rules
 
@@ -50,4 +50,4 @@ The criteria for every agent are in `abort-criteria.md`. This agent also aborts 
 
 The criteria for every agent are in `user-input-criteria.md`. This agent also asks when:
 
-- `merge.human_review` is true and a human has not approved the pull request.
+- `merge.require_human_review` is true and a human has not approved the pull request.

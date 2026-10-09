@@ -12,7 +12,7 @@ def run(agent, tool, tool_input, tests_glob=None):
     with tempfile.TemporaryDirectory() as project:
         if tests_glob is not None:
             (pathlib.Path(project) / "agentic.toml").write_text(
-                f'[paths]\ntests = ["{tests_glob}"]\n')
+                f'[paths]\ntest_files = ["{tests_glob}"]\n')
         event = {"cwd": project, "tool_name": tool, "tool_input": tool_input}
         if agent:
             event["agent_type"] = agent
@@ -60,7 +60,7 @@ class FileRules(unittest.TestCase):
         for agent in ("tdd-maestro", "code-fu"):
             result = run(agent, "Edit", {"file_path": "src/a.py"}, None)
             self.assertEqual(result[0], "deny")
-            self.assertIn("paths.tests", result[1])
+            self.assertIn("paths.test_files", result[1])
 
     def test_a_plugin_scoped_agent_name_is_recognised(self):
         self.assertEqual(edit("agentic:code-fu", "tests/a_test.py")[0], "deny")
@@ -145,7 +145,7 @@ class Worktree(unittest.TestCase):
             git("init", "-q")
             git("commit", "-q", "--allow-empty", "-m", "x")
             git("worktree", "add", "-q", str(tree))
-            (main / "agentic.toml").write_text('[paths]\ntests = ["tests/**"]\n')
+            (main / "agentic.toml").write_text('[paths]\ntest_files = ["tests/**"]\n')
             event = {"cwd": str(tree), "agent_type": "tdd-maestro",
                      "tool_name": "Edit",
                      "tool_input": {"file_path": "tests/a_test.py"}}
@@ -219,7 +219,7 @@ class DryRun(unittest.TestCase):
     def test_the_marker_is_found_under_paths_runs(self):
         self.assertEqual(
             dry_bash("git push", runs="runs",
-                     config='[paths]\nruns = "runs"\n'), "deny")
+                     config='[paths]\nrun_folder = "runs"\n'), "deny")
 
     def test_the_reason_says_dry_run(self):
         with tempfile.TemporaryDirectory() as project:
@@ -252,7 +252,7 @@ class Log(unittest.TestCase):
 
 def write(agent, path, tests="tests/**", config=None):
     with tempfile.TemporaryDirectory() as project:
-        toml = config if config is not None else f'[paths]\ntests = ["{tests}"]\n'
+        toml = config if config is not None else f'[paths]\ntest_files = ["{tests}"]\n'
         (pathlib.Path(project) / "agentic.toml").write_text(toml)
         if path.startswith("<root>/"):
             path = project + path[len("<root>"):]
@@ -278,7 +278,7 @@ class Reports(unittest.TestCase):
         self.assertIsNone(write("task-planner", "<root>/.agentic/t/plan.md"))
 
     def test_the_run_folder_follows_paths_runs(self):
-        config = '[paths]\nruns = "runs"\ntests = ["tests/**"]\n'
+        config = '[paths]\nrun_folder = "runs"\ntest_files = ["tests/**"]\n'
         self.assertIsNone(write("task-planner", "runs/t/plan.md", config=config))
         self.assertEqual(
             write("task-planner", ".agentic/t/plan.md", config=config), "deny")
@@ -332,8 +332,8 @@ class ReadOnlyCommands(unittest.TestCase):
         self.assertEqual(bash("task-scoper", "ls && git push")[0], "deny")
 
 
-GITHUB = ('[github]\ntoken_env = "AGENTIC_GH_TOKEN"\nssh_key = "/k/ai_key"\n'
-          'author_name = "AI Bot"\nauthor_email = "ai@example.com"\n')
+GITHUB = ('[github]\ntoken_env_var = "AGENTIC_GH_TOKEN"\nssh_key_path = "/k/ai_key"\n'
+          'commit_author_name = "AI Bot"\ncommit_author_email = "ai@example.com"\n')
 
 
 def account(agent, command, config=GITHUB, env=None, tool="Bash"):

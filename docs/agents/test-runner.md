@@ -14,7 +14,7 @@ A true account of whether the suite passes, and exactly what fails.
 
 ## Model
 
-The cheaper tier: `models.cheaper` in `agentic.toml`.
+The cheaper tier: `models.cheaper_tier` in `agentic.toml`.
 
 ## Rules
 

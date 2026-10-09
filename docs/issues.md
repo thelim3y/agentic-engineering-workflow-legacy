@@ -27,7 +27,7 @@ When an issue is picked, it is assigned to the user. Once the branch exists, a c
 
 ## Splitting
 
-A large task is split so that each piece is a more focused step for the LLM, and so that each pull request and code review is small enough for a human to review when one is required (`merge.human_review`).
+A large task is split so that each piece is a more focused step for the LLM, and so that each pull request and code review is small enough for a human to review when one is required (`merge.require_human_review`).
 
 When the task-scoper splits an issue, it creates each piece as a sub-issue attached to the original, and labels the original `parent-issue`. Each sub-issue is its own run, with its own branch, one commit and one pull request, so no pull request is large. The sub-issues get no `ai-ready` label. The original's text is not changed. The native sub-issue list is the source of truth for order.
 

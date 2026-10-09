@@ -13,11 +13,11 @@ With neither, it takes the first eligible issue the search returns.
 
 ## Settings
 
-`labels.ready`, `labels.epic` and `labels.parent` in `agentic.toml`.
+`labels.ai_ready`, `labels.epic` and `labels.parent_issue` in `agentic.toml`.
 
 ## Steps
 
-1. List the open issues labelled `labels.ready` and not labelled `labels.epic` or `labels.parent`.
+1. List the open issues labelled `labels.ai_ready` and not labelled `labels.epic` or `labels.parent_issue`.
 2. Keep the eligible ones, by the rules in `issues.md`.
 3. Choose one by the arguments above.
 4. Assign it to the user. The `ticket` skill comments with the branch name once the branch exists.

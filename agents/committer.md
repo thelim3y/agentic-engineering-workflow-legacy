@@ -49,7 +49,7 @@ One commit that holds exactly the work for this ticket, titled from the ticket.
 - An input or a thing the task depends on is missing or not ready (`DEPENDENCY_BLOCKED`).
 - You need something outside the repository, such as access (`EXTERNAL_BLOCKED`).
 - The task contradicts the plan, the tests or the project rules (`DESIGN_CONFLICT`).
-- Three attempts at the same step have failed (`RETRY_LIMIT`).
+- The number of attempts at the same step given in your task message have all failed (`RETRY_LIMIT`).
 - There is nothing to commit (`DEPENDENCY_BLOCKED`).
 - A commit check rejects the commit and a retry does not fix it (`TOOLING_FAILURE`).
 

@@ -51,7 +51,7 @@ A grounded yes or no on whether the work is complete against the plan and ready 
 - An input or a thing the task depends on is missing or not ready (`DEPENDENCY_BLOCKED`).
 - You need something outside the repository, such as access (`EXTERNAL_BLOCKED`).
 - The task contradicts the plan, the tests or the project rules (`DESIGN_CONFLICT`).
-- Three attempts at the same step have failed (`RETRY_LIMIT`).
+- The number of attempts at the same step given in your task message have all failed (`RETRY_LIMIT`).
 - The diff cannot be read (`TOOLING_FAILURE`).
 
 ## Ask with `NEEDS_USER` when

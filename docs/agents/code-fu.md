@@ -14,7 +14,7 @@ The smallest code change that makes those tests pass.
 
 ## Model
 
-The stronger tier: `models.stronger` in `agentic.toml`.
+The stronger tier: `models.stronger_tier` in `agentic.toml`.
 
 ## Rules
 

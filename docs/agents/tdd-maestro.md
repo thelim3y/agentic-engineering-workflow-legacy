@@ -14,7 +14,7 @@ Failing tests that pin down the task's behaviour and nothing more.
 
 ## Model
 
-The stronger tier: `models.stronger` in `agentic.toml`.
+The stronger tier: `models.stronger_tier` in `agentic.toml`.
 
 ## Rules
 

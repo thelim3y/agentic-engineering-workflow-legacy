@@ -19,9 +19,9 @@ epic = "epic"
 
 [models]
 # The model each tier runs on. The tier of each agent is in agents.md.
-# Left out, the tier runs on the session model.
-# cheaper = ""
-# stronger = ""
+# A model alias (haiku, sonnet, opus, fable) or a full model ID.
+cheaper = "haiku"
+stronger = "sonnet"
 
 [paths]
 # Globs of the project's test files. tdd-maestro may edit only these, and

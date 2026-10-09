@@ -35,10 +35,12 @@ FILES = {
 SMALL = ("Add an add function",
          "Add `add(a, b)` to `calc/ops.py`. It returns the sum of its two "
          "arguments.")
-LARGE = ("Add a statistics module",
-         "Add a `calc/stats.py` with `mean`, `median`, `mode`, `variance` and "
-         "`standard_deviation`, each tested, and a command line that prints "
-         "all five for numbers given as arguments.")
+LARGE = ("Add a statistics package",
+         "Add a `calc/stats` package with `mean`, `median`, `mode`, `variance` "
+         "and `standard_deviation`, each in its own file (`calc/stats/mean.py` "
+         "and so on) with its own test file, and a command line in "
+         "`calc/stats/cli.py`, with its own test, that prints all five for "
+         "numbers given as arguments. Variance is the population variance.")
 
 
 def run(*args, **kw):

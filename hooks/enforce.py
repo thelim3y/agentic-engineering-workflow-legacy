@@ -18,7 +18,8 @@ READ_ONLY_GH_PR = ("view", "diff", "checks", "list", "status")
 
 # Agent -> (allowed command prefixes, or None), (denied command prefixes)
 COMMAND_RULES = {
-    "task-scoper": {"allow": [("gh", "issue"), ("gh", "api")]},
+    "task-scoper": {"allow": [("gh", "issue"), ("gh", "api"),
+                              ("gh", "repo", "view")]},
     "tdd-maestro": {"deny": [("git", "push"), ("gh",)]},
     "code-fu": {"deny": [("git", "push"), ("gh",)]},
     "test-runner": {"deny": [("git",), ("gh",)]},

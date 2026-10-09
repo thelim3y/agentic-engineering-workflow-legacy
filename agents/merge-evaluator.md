@@ -27,6 +27,7 @@ A grounded yes or no on merging, with every failing condition named.
 - Report only what you observed, with the command or file that shows it.
 - Run no tests; take test results from `run.md`.
 - Work in the current directory. Never use `cd` or `git -C`.
+- Run plain commands, one per call: no `$(...)`, no variables and no loops. Claude Code refuses complex commands in a worktree.
 - If a memory tool is unavailable, go on without it.
 - Write only your own report, in the run folder.
 - Never write a `## Key Learnings:` heading, and never save to memory.

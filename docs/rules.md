@@ -9,6 +9,7 @@ What every agent must and must not do. Verdicts, abort criteria, user input crit
 - Report only what you observed, with the command or file that shows it. Never state a verdict you did not earn.
 - Write only your own report, in the run folder, unless your task is to edit the project's files.
 - Work in the current directory. Never use `cd` or `git -C`.
+- Run plain commands, one per call: no `$(...)`, no variables and no loops. Claude Code refuses complex commands in a worktree.
 - If a memory tool is unavailable, go on without it.
 - Never write a `## Key Learnings:` heading. engram saves anything under it as memory.
 

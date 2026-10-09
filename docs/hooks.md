@@ -21,7 +21,7 @@ An agent on a list may also run plain reads: `ls`, `cat`, `head`, `tail`, `wc`, 
 
 | Agent | `Bash` is limited to |
 |---|---|
-| task-scoper | `gh issue` commands, and `gh api` on the sub-issues endpoint |
+| task-scoper | `gh issue` commands, `gh repo view`, and `gh api` on the sub-issues endpoint |
 | tdd-maestro | Build and test commands; no `git push` and no `gh` |
 | code-fu | Build and test commands; no `git push` and no `gh` |
 | test-runner | Build and test commands; no `git` and no `gh` |

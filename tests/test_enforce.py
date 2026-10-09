@@ -73,6 +73,9 @@ class FileRules(unittest.TestCase):
 
 
 class CommandRules(unittest.TestCase):
+    def test_task_scoper_may_read_the_repository(self):
+        self.assertIsNone(bash("task-scoper", "gh repo view --json name"))
+
     def test_task_scoper_may_use_gh_issue(self):
         self.assertIsNone(bash("task-scoper", "gh issue create --title x"))
 

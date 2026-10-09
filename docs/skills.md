@@ -29,13 +29,7 @@ Any `BLOCKED`, `NEEDS_USER` or `*_FAILED` verdict stops the run. A `FAIL`, `CHAN
 
 ## pull-issue
 
-Used by `ticket` when the ticket is a GitHub issue and not pasted text. It picks one issue by the rules in `issues.md` and claims it. Both arguments are optional:
-
-- **An issue number:** use that issue. If it is not eligible, say why and stop; never substitute another.
-- **An epic number:** take the first eligible child of that epic.
-- **Nothing:** take the first eligible issue the search returns.
-
-It returns the issue in full. The epic body is read only to find the order of its children.
+Picks one eligible GitHub issue and claims it. It has its own doc: `skills/pull-issue.md`.
 
 ## tdd
 

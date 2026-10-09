@@ -38,11 +38,4 @@ The red, green, refactor loop that tdd-maestro and code-fu share. It has its own
 
 ## pr-handoff
 
-The Implementer writes it, and the Reviewer and the Merger read it. The pull request description lists:
-
-- the red command and the expected failure;
-- the matching green result;
-- the broader verification;
-- when no test could fail first, the alternate evidence and why.
-
-A green suite without an observed test-first failure does not satisfy this.
+The format of the pull request description. It has its own doc: `skills/pr-handoff.md`.

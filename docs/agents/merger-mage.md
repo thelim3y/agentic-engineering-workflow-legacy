@@ -22,6 +22,7 @@ The rules for every agent are in `rules.md`. This agent also follows:
 
 - Merge only after `MERGEABLE`.
 - Never force a merge.
+- Merge with a rebase if the repository allows it, and otherwise with a merge commit.
 - Never delete the branch unless told to.
 - After merging, if the issue was the last open sub-issue of a parent issue, close the parent.
 

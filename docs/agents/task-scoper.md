@@ -20,10 +20,10 @@ The stronger tier: `models.stronger` in `agentic.toml`.
 
 The rules for every agent are in `rules.md`. This agent also follows:
 
-- Never change the text of the original issue.
+- Never change the text of the original issue. When you split it, label it `parent-issue`.
 - Each sub-issue states its own goal and can be completed and tested on its own.
 - Never plan or write code.
-- Create sub-issues without `ai-ready`, as `issues.md` says.
+- Create each piece as a sub-issue attached to the original, without `ai-ready`, as `issues.md` says.
 
 ## Verdicts
 

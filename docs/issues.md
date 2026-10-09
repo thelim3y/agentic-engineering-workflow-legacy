@@ -2,8 +2,9 @@
 
 Rules for the issues the workflow works on.
 
-- Every task issue has a parent epic. The first lines of its body say `Parent epic: #E`.
+- Every task issue has a parent epic. The first lines of its body say `Parent epic: #E`. A sub-issue's parent epic is its parent issue's.
 - An epic is an issue labelled `epic`. Epics are parents, never tasks.
+- A parent issue is an issue that was split. It is labelled `parent-issue` and has the pieces as native GitHub sub-issues. Its text is not the task, because its sub-issues fulfil it. Like an epic, it is never picked.
 - Only an issue labelled `ai-ready` is picked up.
 - Only the user sets `ai-ready`. No agent adds it, and sub-issues the task-scoper creates wait for it.
 - The skill that pulls an issue can be given an epic. With no epic, it takes the first result of the search.
@@ -23,3 +24,9 @@ If none is eligible, the skill lists what blocks each candidate and stops.
 ## Claiming
 
 When an issue is picked, it is assigned to the user. Once the branch exists, a comment on the issue names it. An assigned issue, or one named by an open pull request, counts as claimed, so parallel runs never take the same issue.
+
+## Splitting
+
+When the task-scoper splits an issue, it creates each piece as a sub-issue attached to the original, and labels the original `parent-issue`. The sub-issues get no `ai-ready` label. The original's text is not changed. The native sub-issue list is the source of truth for order.
+
+When the last sub-issue of a parent issue is closed, merger-mage closes the parent. If merging is turned off, the user closes it.

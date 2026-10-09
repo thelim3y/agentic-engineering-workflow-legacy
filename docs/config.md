@@ -16,6 +16,8 @@ retries = 3
 ready = "ai-ready"
 # The label that marks an issue as an epic.
 epic = "epic"
+# The label that marks a split issue as a parent issue.
+parent = "parent-issue"
 
 [models]
 # The model each tier runs on. The tier of each agent is in agents.md.

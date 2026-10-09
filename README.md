@@ -25,7 +25,7 @@ Any agent can also stop with `BLOCKED` or `NEEDS_USER`.
 flowchart TD
     ticket["Ticket<br/>pull-issue skill or pasted text"] --> scope["task-scoper"]
     scope -- FITS --> plan["task-planner"]
-    scope -- SPLIT --> subs["Each sub-issue"] --> plan
+    scope -- SPLIT --> subs(["Sub-issues wait for ai-ready"])
     plan --> tests["tdd-maestro<br/>tests first"]
     tests --> code["code-fu"]
     code -. TEST_DISPUTED .-> tests

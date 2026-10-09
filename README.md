@@ -42,9 +42,10 @@ flowchart TD
 
 ## Documents
 
-- `docs/agents.md`: the agents, their tasks and model tiers.
+- `docs/agents.md`: the agents, each with its own doc in `docs/agents/`.
+- `docs/rules.md`, `docs/abort-criteria.md`, `docs/user-input-criteria.md`: what holds for every agent.
+- `docs/verdicts.md`: the verdicts agents return.
+- `docs/hooks.md`: the hook that enforces file and command limits.
 - `docs/skills.md`: the skills.
 - `docs/issues.md`: the rules for the issues the workflow works on.
-- `docs/verdicts.md`: the verdicts agents return.
-- `docs/abort-criteria.md`: when an agent gives up.
 - `docs/config.md`: `agentic.toml` and its settings.

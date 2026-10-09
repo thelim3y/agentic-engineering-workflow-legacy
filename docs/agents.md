@@ -1,6 +1,6 @@
 # Agents
 
-Every agent has these sections:
+Every agent has its own doc in `agents/` with these sections:
 
 - **Name**
 - **Summary:** when to call the agent.
@@ -13,16 +13,16 @@ Every agent has these sections:
 
 Each agent has one task. The `ticket` skill runs them in order.
 
-An agent that mostly reads text and finds things in it runs on a cheaper model. One that makes judgments runs on a stronger one.
+An agent that mostly reads text and finds things in it runs on the cheaper model tier. One that makes judgments runs on the stronger tier. No agent spawns another, and none reaches the web.
 
-| Agent | Its one task | Model |
-|---|---|---|
-| task-scoper | Decide whether the task is too large, and split it into sub-issues if so | stronger |
-| task-planner | Plan one right-sized task | stronger |
-| tdd-maestro | Write the failing tests, and own them | stronger |
-| code-fu | Write the code that passes the tests | stronger |
-| test-runner | Run the tests and report | cheaper |
-| pr-create | Make the pull request | cheaper |
-| pr-reviewer | Review the pull request | stronger |
-| merge-evaluator | Decide whether the pull request can be merged | cheaper |
-| merger-mage | Merge it (optional) | cheaper |
+| Agent | Its one task |
+|---|---|
+| [task-scoper](agents/task-scoper.md) | Decide whether the task is too large, and split it into sub-issues if so |
+| [task-planner](agents/task-planner.md) | Plan one right-sized task |
+| [tdd-maestro](agents/tdd-maestro.md) | Write the failing tests, and own them |
+| [code-fu](agents/code-fu.md) | Write the code that passes the tests |
+| [test-runner](agents/test-runner.md) | Run the tests and report |
+| [pr-create](agents/pr-create.md) | Make the pull request |
+| [pr-reviewer](agents/pr-reviewer.md) | Review the pull request |
+| [merge-evaluator](agents/merge-evaluator.md) | Decide whether the pull request can be merged |
+| [merger-mage](agents/merger-mage.md) | Merge it (optional) |

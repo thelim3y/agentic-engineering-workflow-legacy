@@ -13,16 +13,4 @@ An agent stops and asks the user when it meets any criterion here. It returns `N
 
 An agent asks one question at a time.
 
-## Per agent
-
-| Agent | Also asks when |
-|---|---|
-| task-scoper | It cannot tell whether the task is too large without a decision about its scope |
-| task-planner | The plan needs a design choice that no project rule decides |
-| tdd-maestro | The behaviour a test should pin down is ambiguous |
-| code-fu | The code needs a change outside the task, such as to a public interface |
-| test-runner | The tests were already failing before the change |
-| pr-create | The branch holds changes unrelated to the task |
-| pr-reviewer | A problem needs a product decision, not a code judgment |
-| merge-evaluator | The merge needs a human approval that has not been given |
-| merger-mage | A step beyond the merge itself, such as deleting the branch, is needed |
+Each agent's own criteria are in its doc in `agents/`.

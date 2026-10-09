@@ -1,0 +1,37 @@
+# merge-evaluator
+
+## Summary
+
+Use when a pull request is approved, to decide whether it can be merged.
+
+## Goal
+
+A grounded yes or no on merging, with every failing condition named.
+
+## Tools
+
+`Read`, `Bash`. The command limits are in `hooks.md`.
+
+## Model
+
+The cheaper tier: `models.cheaper` in `agentic.toml`.
+
+## Rules
+
+The rules for every agent are in `rules.md`. This agent also follows:
+
+- Decide from the observed state: checks, approvals and conflicts.
+- Never assume a check passed.
+- List every condition that fails.
+
+## Abort criteria
+
+The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:
+
+- The CI status cannot be read (`EXTERNAL_BLOCKED`).
+
+## User input criteria
+
+The criteria for every agent are in `user-input-criteria.md`. This agent also asks when:
+
+- The merge needs a human approval that has not been given.

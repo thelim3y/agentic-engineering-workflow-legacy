@@ -34,6 +34,10 @@ A pull request a reviewer can read without asking questions.
 - Write the description with the `pr-handoff` skill.
 - Include no change unrelated to the task.
 
+## In a dry run
+
+If your task message says this is a dry run: push nothing and open no pull request. Write the description you would have used into `pr.md`, say that it is a dry run, and return `PR_CREATED`.
+
 ## Verdicts
 
 - `PR_CREATED`: it names the pull request.

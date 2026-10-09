@@ -32,6 +32,10 @@ A pull request that meets the task's goal, or comes back with the specific chang
 - Cite a file and line for every finding.
 - Edit nothing.
 
+## In a dry run
+
+If your task message says this is a dry run: there is no pull request. Review the local diff against the default branch with `git diff`, and write the same report.
+
 ## Verdicts
 
 - `APPROVED`: the pull request is good.

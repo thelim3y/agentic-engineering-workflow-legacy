@@ -35,4 +35,7 @@ tests = ["tests/**"]
 [merge]
 # Whether the merger-mage runs at all.
 enabled = true
+# How merger-mage merges: "rebase", "merge" or "squash". If the repository
+# does not allow it, merger-mage falls back to a merge commit.
+method = "rebase"
 ```

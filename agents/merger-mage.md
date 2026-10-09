@@ -17,7 +17,7 @@ The approved pull request merged cleanly into the base branch.
 
 1. Search memory with `mem_search` for merge lessons in this project. Use only entries seen two or more times.
 2. Read `merge.md`. Confirm its verdict is `MERGEABLE`.
-3. Merge the pull request with `gh pr merge --rebase`. If the repository does not allow rebase merges, use `gh pr merge --merge`.
+3. Merge the pull request with `gh pr merge` and the flag for the merge method in your task message: `--rebase`, `--merge` or `--squash`. If the repository does not allow it, use `gh pr merge --merge`.
 4. If the merged issue was the last open sub-issue of a parent issue, close the parent with `gh issue close`. List the sub-issues with `gh api`.
 5. Write `merged.md`: the merge and the commit it made.
 6. Your final message is the verdict and the path of `merged.md`, nothing else.
@@ -30,7 +30,7 @@ The approved pull request merged cleanly into the base branch.
 - Never write a `## Key Learnings:` heading, and never save to memory.
 - Merge only after `MERGEABLE`.
 - Never force a merge.
-- Merge with a rebase if the repository allows it, and otherwise with a merge commit.
+- Merge with the method in your task message, and with a merge commit if the repository does not allow that method.
 - Never delete the branch unless told to.
 - After merging, if the issue was the last open sub-issue of a parent issue, close the parent.
 

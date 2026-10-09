@@ -12,14 +12,14 @@ The arguments are: $ARGUMENTS
 
 ## Settings
 
-Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.retries` 3, `labels.ready` `ai-ready`, `labels.epic` `epic`, `labels.parent` `parent-issue`, `models.stronger` `claude-opus-5-5`, `models.cheaper` `sonnet`, `paths.runs` `.agentic`, `merge.enabled` true.
+Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.retries` 3, `labels.ready` `ai-ready`, `labels.epic` `epic`, `labels.parent` `parent-issue`, `models.stronger` `claude-opus-5-5`, `models.cheaper` `sonnet`, `paths.runs` `.agentic`, `merge.enabled` true, `merge.method` `rebase`.
 
 ## Steps
 
 1. **Intake.** If the arguments hold ticket text that is not an issue number or `epic=N`, that text is the ticket. Otherwise run the `pull-issue` skill with the issue or epic given, and the issue it returns is the ticket.
 2. **Branch.** From the repository's default branch (`gh repo view`), after `git fetch`, create a branch with `git switch -c`, named from the ticket's number and title, or from its first line for pasted text. For an issue, comment on it with the branch name.
 3. **Run folder.** Create `<paths.runs>/<ticket>/`, where `<ticket>` is the issue number or a short name from the first line.
-4. **Run the agents** in the order of the table below. Launch each with the Agent tool. Give it the ticket, the run folder, and the report paths its definition says it reads. Set the model from its tier: `models.stronger` for task-scoper, task-planner, tdd-maestro, code-fu, pr-evaluator and pr-reviewer, and `models.cheaper` for test-runner, committer, pr-create, merge-evaluator and merger-mage.
+4. **Run the agents** in the order of the table below. Launch each with the Agent tool. Give it the ticket, the run folder, and the report paths its definition says it reads. For merger-mage, also give `merge.method`. Set the model from its tier: `models.stronger` for task-scoper, task-planner, tdd-maestro, code-fu, pr-evaluator and pr-reviewer, and `models.cheaper` for test-runner, committer, pr-create, merge-evaluator and merger-mage.
 5. **Read the verdict** on the first line of the agent's report, go to the next agent in the table, and repeat.
 6. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed.
 

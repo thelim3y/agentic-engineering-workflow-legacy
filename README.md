@@ -47,6 +47,8 @@ flowchart TD
 
 ## Documents
 
+- `docs/getting-started.md`: set up the plugin and try a dry run.
+- `docs/testing.md`: the test plan and the dry run.
 - `docs/agents.md`: the agents, each with its own doc in `docs/agents/`.
 - `docs/rules.md`, `docs/abort-criteria.md`, `docs/user-input-criteria.md`: what holds for every agent.
 - `docs/verdicts.md`: the verdicts agents return.

@@ -10,7 +10,7 @@ Failing tests that pin down the task's behaviour and nothing more.
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`, and from engram: `mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

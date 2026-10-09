@@ -10,7 +10,7 @@ A true account of whether the suite passes, and exactly what fails.
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Bash`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Bash`, and from engram: `mem_search`, `mem_save`. The command limits are in `hooks.md`.
 
 ## Model
 

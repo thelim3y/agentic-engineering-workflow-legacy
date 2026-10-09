@@ -10,7 +10,7 @@ A pull request that meets the task's goal, or comes back with the specific chang
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Bash`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Bash`, and from engram: `mem_search`, `mem_save`. The command limits are in `hooks.md`.
 
 ## Model
 

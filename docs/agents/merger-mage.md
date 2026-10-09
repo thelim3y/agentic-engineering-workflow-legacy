@@ -10,7 +10,7 @@ The approved pull request merged cleanly into the base branch.
 
 ## Tools
 
-`Read`, `Bash`. The command limits are in `hooks.md`.
+`Read`, `Bash`, and from engram: `mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

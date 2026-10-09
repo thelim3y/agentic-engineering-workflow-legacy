@@ -10,7 +10,7 @@ A grounded yes or no on merging, with every failing condition named.
 
 ## Tools
 
-`Read`, `Bash`. The command limits are in `hooks.md`.
+`Read`, `Bash`, and from engram: `mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

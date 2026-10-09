@@ -22,4 +22,4 @@ If none is eligible, the skill lists what blocks each candidate and stops.
 
 ## Claiming
 
-When an issue is picked, it is assigned to the user and gets a comment naming the branch. An assigned issue or one named by an open pull request counts as claimed, so parallel runs never take the same issue.
+When an issue is picked, it is assigned to the user. Once the branch exists, a comment on the issue names it. An assigned issue, or one named by an open pull request, counts as claimed, so parallel runs never take the same issue.

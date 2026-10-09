@@ -5,8 +5,9 @@
 The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number, an epic number, pasted ticket text, or nothing. Any argument also overrides the matching setting in `agentic.toml`.
 
 1. **Intake.** With pasted text, that text is the ticket. Otherwise it runs `pull-issue` with the issue or epic given.
-2. **Run the agents** in the order below. After each agent it reads the verdict and goes to the next agent in the table. It does nothing else: it plans, codes and reviews nothing itself.
-3. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed.
+2. **Branch.** As soon as it has the ticket, it creates a branch from the repository's default branch, named from the ticket's number and title, or from its first line for pasted text. For an issue, it then comments on the issue with the branch name.
+3. **Run the agents** in the order below. After each agent it reads the verdict and goes to the next agent in the table. It does nothing else: it plans, codes and reviews nothing itself.
+4. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed.
 
 | Agent | Verdict | Next |
 |---|---|---|

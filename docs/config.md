@@ -23,6 +23,11 @@ epic = "epic"
 # cheaper = ""
 # stronger = ""
 
+[paths]
+# Globs of the project's test files. tdd-maestro may edit only these, and
+# code-fu may edit none of them. No default: the hook denies both until it is set.
+tests = ["tests/**"]
+
 [merge]
 # Whether the merger-mage runs at all.
 enabled = true

@@ -21,9 +21,10 @@ parent = "parent-issue"
 
 [models]
 # The model each tier runs on. The tier of each agent is in agents.md.
-# A model alias (haiku, sonnet, opus, fable) or a full model ID.
+# A model alias: haiku, sonnet, opus or fable. A full model ID is not
+# accepted when the ticket skill launches an agent.
 cheaper = "sonnet"
-stronger = "claude-opus-5-5"
+stronger = "opus"
 
 [paths]
 # The folder that holds each run's reports. It is not committed.

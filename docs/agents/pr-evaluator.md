@@ -10,7 +10,7 @@ A grounded yes or no on whether the work is complete against the plan and ready 
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Bash`, and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Bash`, `Write` (the report only), and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

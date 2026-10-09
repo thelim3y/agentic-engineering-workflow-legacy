@@ -12,7 +12,7 @@ The arguments are: $ARGUMENTS
 
 ## Settings
 
-Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.retries` 3, `labels.ready` `ai-ready`, `labels.epic` `epic`, `labels.parent` `parent-issue`, `models.stronger` `claude-opus-5-5`, `models.cheaper` `sonnet`, `paths.runs` `.agentic`, `merge.enabled` true, `merge.method` `rebase`.
+Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.retries` 3, `labels.ready` `ai-ready`, `labels.epic` `epic`, `labels.parent` `parent-issue`, `models.stronger` `opus`, `models.cheaper` `sonnet`, `paths.runs` `.agentic`, `merge.enabled` true, `merge.method` `rebase`.
 
 ## Dry run
 

@@ -10,7 +10,7 @@ A true account of whether the suite passes, and exactly what fails.
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Bash`, and from engram: `mcp__plugin_engram_engram__mem_search`, `mcp__plugin_engram_engram__mem_save`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Bash`, `Write` (the report only), and from engram: `mcp__plugin_engram_engram__mem_search`, `mcp__plugin_engram_engram__mem_save`. The command limits are in `hooks.md`.
 
 ## Model
 

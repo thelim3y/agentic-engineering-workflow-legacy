@@ -6,6 +6,7 @@ with no rule here, passes. A call that breaks a rule is denied with a reason.
 """
 
 import json
+import os
 import pathlib
 import re
 import shlex
@@ -33,6 +34,12 @@ COMMAND_RULES = {
     "merger-mage": {"allow": [("gh", "pr", "view"), ("gh", "pr", "merge"),
                               ("gh", "issue", "close"), ("gh", "api")]},
 }
+
+
+AGENTS = set(COMMAND_RULES) | {"task-planner"}
+READ_ONLY_COMMANDS = {"ls", "cat", "head", "tail", "wc", "pwd", "grep", "rg",
+                      "find", "stat", "diff", "sort", "uniq", "tree", "file"}
+READ_ONLY_GIT = [("git", "ls-files"), ("git", "rev-parse")]
 
 
 def agent_name(event):
@@ -133,23 +140,30 @@ def remote_effect(words):
     return tuple(words[1:3]) not in READ_ONLY_GH
 
 
-def relative(path, cwd):
+def relative(path, root):
     p = pathlib.Path(path)
     try:
-        return p.relative_to(cwd).as_posix() if p.is_absolute() else p.as_posix()
+        return p.relative_to(root).as_posix() if p.is_absolute() else p.as_posix()
     except ValueError:
         return p.as_posix()
 
 
 def check_file(agent, event):
-    if agent not in ("tdd-maestro", "code-fu"):
+    if agent not in AGENTS:
         return
     cwd = event.get("cwd", ".")
+    root = project_root(cwd)
+    path = relative(event["tool_input"].get("file_path", ""), root)
+    runs = load_config(cwd).get("paths", {}).get("runs", ".agentic")
+    if path == runs or path.startswith(runs.rstrip("/") + "/"):
+        return
+    if agent not in ("tdd-maestro", "code-fu"):
+        return deny(agent, f"{path} is outside the run folder ({runs}); "
+                    "this agent writes only its report there.")
     globs = test_globs(cwd)
     if not globs:
         return deny(agent, "paths.tests is not set in agentic.toml, so no "
                     "edit is allowed until it is.")
-    path = relative(event["tool_input"].get("file_path", ""), cwd)
     is_test = any(glob_regex(g).match(path) for g in globs)
     if agent == "tdd-maestro" and not is_test:
         return deny(agent, f"{path} is not a test file (paths.tests); "
@@ -176,6 +190,15 @@ def starts_with(words, prefix):
     return tuple(words[:len(prefix)]) == prefix
 
 
+def read_only(words):
+    if any(starts_with(words, p) for p in READ_ONLY_GIT):
+        return True
+    if words[0] not in READ_ONLY_COMMANDS:
+        return False
+    return not (words[0] == "find" and any(
+        w in ("-delete", "-exec", "-execdir", "-ok", "-okdir") for w in words))
+
+
 def check_command(agent, event):
     rules = COMMAND_RULES.get(agent)
     if not rules:
@@ -185,7 +208,9 @@ def check_command(agent, event):
             return deny(agent, f"`{' '.join(words[:3])}` is not allowed "
                         "for this agent.")
         allow = rules.get("allow")
-        if allow is not None and not any(starts_with(words, p) for p in allow):
+        if allow is not None and not (
+                any(starts_with(words, p) for p in allow)
+                or read_only(words)):
             return deny(agent, f"`{' '.join(words[:3])}` is not on this "
                         "agent's list of allowed commands.")
 
@@ -205,6 +230,10 @@ def check_dry_run(event):
 
 def main():
     event = json.load(sys.stdin)
+    log = os.environ.get("AGENTIC_HOOK_LOG")
+    if log:
+        with open(log, "a") as f:
+            f.write(json.dumps(event) + "\n")
     if dry_run(event.get("cwd", ".")):
         check_dry_run(event)
     agent = agent_name(event)

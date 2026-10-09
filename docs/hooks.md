@@ -6,6 +6,8 @@ The hook is at plugin level because hooks in a subagent's frontmatter are ignore
 
 ## File rules
 
+Every agent may write in the run folder, `paths.runs` in `agentic.toml`, which is where reports go. Every agent except the two below is denied a write anywhere else.
+
 | Agent | Denied |
 |---|---|
 | tdd-maestro | `Edit` or `Write` on any file that does not match `paths.tests` |
@@ -14,6 +16,8 @@ The hook is at plugin level because hooks in a subagent's frontmatter are ignore
 If `paths.tests` is not set, the hook denies both agents' edits and says to set it.
 
 ## Command rules
+
+An agent on a list may also run plain reads: `ls`, `cat`, `head`, `tail`, `wc`, `pwd`, `grep`, `rg`, `find` without `-delete` or `-exec`, `stat`, `diff`, `sort`, `uniq`, `tree`, `file`, `git ls-files` and `git rev-parse`.
 
 | Agent | `Bash` is limited to |
 |---|---|

@@ -68,8 +68,8 @@ class FileRules(unittest.TestCase):
     def test_the_reason_names_the_agent(self):
         self.assertIn("code-fu", edit("code-fu", "tests/a_test.py")[1])
 
-    def test_other_agents_cannot_edit_but_are_not_checked_here(self):
-        self.assertIsNone(edit("test-runner", "src/a.py"))
+    def test_other_agents_cannot_edit_project_files(self):
+        self.assertEqual(edit("test-runner", "src/a.py")[0], "deny")
 
 
 class CommandRules(unittest.TestCase):
@@ -231,6 +231,80 @@ class DryRun(unittest.TestCase):
 
     def test_without_a_marker_nothing_changes(self):
         self.assertIsNone(run(None, "Bash", {"command": "git push"}))
+
+
+class Log(unittest.TestCase):
+    def test_the_event_is_logged_when_a_log_file_is_named(self):
+        with tempfile.TemporaryDirectory() as root:
+            log = pathlib.Path(root) / "hook.log"
+            event = {"cwd": root, "tool_name": "Bash", "agent_type": "p:code-fu",
+                     "tool_input": {"command": "ls"}}
+            env = dict(__import__("os").environ, AGENTIC_HOOK_LOG=str(log))
+            subprocess.run([sys.executable, str(SCRIPT)], input=json.dumps(event),
+                           capture_output=True, text=True, env=env)
+            logged = json.loads(log.read_text().splitlines()[0])
+            self.assertEqual(logged["agent_type"], "p:code-fu")
+
+
+def write(agent, path, tests="tests/**", config=None):
+    with tempfile.TemporaryDirectory() as project:
+        toml = config if config is not None else f'[paths]\ntests = ["{tests}"]\n'
+        (pathlib.Path(project) / "agentic.toml").write_text(toml)
+        if path.startswith("<root>/"):
+            path = project + path[len("<root>"):]
+        event = {"cwd": project, "tool_name": "Write",
+                 "tool_input": {"file_path": path}, "agent_type": agent}
+        done = subprocess.run([sys.executable, str(SCRIPT)],
+                              input=json.dumps(event), capture_output=True,
+                              text=True)
+        if not done.stdout.strip():
+            return None
+        return json.loads(done.stdout)["hookSpecificOutput"][
+            "permissionDecision"]
+
+
+class Reports(unittest.TestCase):
+    def test_every_agent_may_write_in_the_run_folder(self):
+        for agent in ("task-scoper", "task-planner", "tdd-maestro", "code-fu",
+                      "test-runner", "pr-evaluator", "committer", "pr-create",
+                      "pr-reviewer", "merge-evaluator", "merger-mage"):
+            self.assertIsNone(write(agent, ".agentic/t/report.md"), agent)
+
+    def test_an_absolute_path_in_the_run_folder_is_allowed(self):
+        self.assertIsNone(write("task-planner", "<root>/.agentic/t/plan.md"))
+
+    def test_the_run_folder_follows_paths_runs(self):
+        config = '[paths]\nruns = "runs"\ntests = ["tests/**"]\n'
+        self.assertIsNone(write("task-planner", "runs/t/plan.md", config=config))
+        self.assertEqual(
+            write("task-planner", ".agentic/t/plan.md", config=config), "deny")
+
+    def test_other_agents_may_write_nothing_else(self):
+        for agent in ("task-scoper", "task-planner", "test-runner",
+                      "pr-evaluator", "committer", "pr-create", "pr-reviewer",
+                      "merge-evaluator", "merger-mage"):
+            self.assertEqual(write(agent, "src/a.py"), "deny", agent)
+
+    def test_the_coders_keep_their_own_file_rules(self):
+        self.assertEqual(write("tdd-maestro", "src/a.py"), "deny")
+        self.assertEqual(write("code-fu", "tests/a_test.py"), "deny")
+        self.assertIsNone(write("code-fu", "src/a.py"))
+
+
+class ReadOnlyCommands(unittest.TestCase):
+    def test_listed_agents_may_run_plain_reads(self):
+        for command in ("ls -la", "cat agentic.toml", "git ls-files",
+                        "grep -rn x .", "find . -name x", "head -5 a",
+                        "git rev-parse --show-toplevel"):
+            self.assertIsNone(bash("task-scoper", command), command)
+            self.assertIsNone(bash("pr-evaluator", command), command)
+
+    def test_find_that_deletes_or_executes_is_denied(self):
+        self.assertEqual(bash("task-scoper", "find . -delete")[0], "deny")
+        self.assertEqual(bash("task-scoper", "find . -exec rm {} ;")[0], "deny")
+
+    def test_a_read_does_not_excuse_the_rest_of_the_command(self):
+        self.assertEqual(bash("task-scoper", "ls && git push")[0], "deny")
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 ## ticket
 
-The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number, an epic number, pasted ticket text, or nothing. Any argument also overrides the matching setting in `agentic.toml`.
+The orchestrator and the entry point: `/ticket`. It takes a GitHub issue number, an epic number, pasted ticket text, or nothing. Any argument also overrides the matching setting in `agentic.toml`. With `dry-run`, it runs the whole workflow with every remote effect blocked, as `testing.md` says.
 
 1. **Intake.** With pasted text, that text is the ticket. Otherwise it runs `pull-issue` with the issue or epic given.
 2. **Worktree.** As soon as it has the ticket, it makes sure it is working in a linked git worktree, never in the main checkout. If it is not in one, it enters a new one, named from the ticket's number and title, or from its first line for pasted text. The worktree branches from the repository's default branch. For an issue, it then comments on the issue with the branch name.

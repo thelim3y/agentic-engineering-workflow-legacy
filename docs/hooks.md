@@ -28,6 +28,17 @@ If `paths.tests` is not set, the hook denies both agents' edits and says to set 
 | merge-evaluator | Read-only `gh pr` commands |
 | merger-mage | `gh pr view`, `gh pr merge`, `gh issue close`, and `gh api` reads of the sub-issues endpoint |
 
+## Dry run
+
+While a `dry-run` file exists in `<paths.runs>/<ticket>/` of the worktree, the same hook also denies, for every caller including the main session:
+
+- `git push`;
+- any `gh` command other than `gh issue view`, `list` and `status`, `gh pr view`, `diff`, `checks`, `list` and `status`, and `gh repo view`;
+- `gh api` with a method other than GET, or with `-f`, `-F`, `--field`, `--raw-field` or `--input`;
+- the engram `mem_save` tool.
+
+Local edits, commits and tests are not blocked.
+
 ## The ticket skill
 
 The `ticket` skill, with `pull-issue`, runs in the main session. There the hook sees no `agent_type` and does not know which skill is active, so it cannot enforce a skill's limits. These are the skill's `allowed-tools` pre-approvals instead, which let it run without prompts and leave every other command to the normal permission prompt:

@@ -45,6 +45,7 @@ def deny(agent, reason):
         "hookEventName": "PreToolUse",
         "permissionDecision": "deny",
         "permissionDecisionReason": f"{agent}: {reason}"}}))
+    sys.exit(0)
 
 
 def glob_regex(pattern):
@@ -81,14 +82,55 @@ def config_dirs(cwd):
     yield pathlib.Path(common).parent
 
 
-def test_globs(cwd):
+def load_config(cwd):
     for directory in config_dirs(cwd):
         try:
             with open(directory / "agentic.toml", "rb") as f:
-                return tomllib.load(f).get("paths", {}).get("tests") or []
+                return tomllib.load(f)
         except (OSError, tomllib.TOMLDecodeError):
             continue
-    return []
+    return {}
+
+
+def test_globs(cwd):
+    return load_config(cwd).get("paths", {}).get("tests") or []
+
+
+def project_root(cwd):
+    try:
+        return pathlib.Path(subprocess.run(
+            ["git", "-C", str(cwd), "rev-parse", "--show-toplevel"],
+            capture_output=True, text=True, check=True).stdout.strip())
+    except (OSError, subprocess.CalledProcessError):
+        return pathlib.Path(cwd)
+
+
+def dry_run(cwd):
+    runs = load_config(cwd).get("paths", {}).get("runs", ".agentic")
+    return any((project_root(cwd) / runs).glob("*/dry-run"))
+
+
+READ_ONLY_GH = {("issue", "view"), ("issue", "list"), ("issue", "status"),
+                ("pr", "view"), ("pr", "diff"), ("pr", "checks"),
+                ("pr", "list"), ("pr", "status"), ("repo", "view")}
+API_WRITES = {"-X", "--method", "-f", "-F", "--field", "--raw-field",
+              "--input"}
+
+
+def remote_effect(words):
+    """True when the command changes something outside the machine."""
+    if starts_with(words, ("git", "push")):
+        return True
+    if words[0] != "gh":
+        return False
+    if len(words) > 1 and words[1] == "api":
+        for i, word in enumerate(words[2:], 2):
+            if word in API_WRITES and not (
+                    word in ("-X", "--method")
+                    and words[i + 1:i + 2] == ["GET"]):
+                return True
+        return False
+    return tuple(words[1:3]) not in READ_ONLY_GH
 
 
 def relative(path, cwd):
@@ -148,8 +190,23 @@ def check_command(agent, event):
                         "agent's list of allowed commands.")
 
 
+def check_dry_run(event):
+    tool = event.get("tool_name")
+    if tool == "mcp__plugin_engram_engram__mem_save":
+        return deny("dry run", "memory is not written in a dry run.")
+    if tool != "Bash":
+        return
+    for words in segments(event["tool_input"].get("command", "")):
+        if remote_effect(words):
+            return deny("dry run", f"`{' '.join(words[:3])}` changes "
+                        "something outside this machine, which a dry run "
+                        "never does.")
+
+
 def main():
     event = json.load(sys.stdin)
+    if dry_run(event.get("cwd", ".")):
+        check_dry_run(event)
     agent = agent_name(event)
     if not agent:
         return

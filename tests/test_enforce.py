@@ -152,5 +152,86 @@ class Worktree(unittest.TestCase):
             self.assertEqual(done.stdout.strip(), "")
 
 
+def dry(tool, tool_input, agent=None, runs=".agentic", config=None):
+    """Run the hook in a project that has a dry-run marker."""
+    with tempfile.TemporaryDirectory() as project:
+        root = pathlib.Path(project)
+        if config:
+            (root / "agentic.toml").write_text(config)
+        marker = root / runs / "123-x" / "dry-run"
+        marker.parent.mkdir(parents=True)
+        marker.write_text("")
+        event = {"cwd": project, "tool_name": tool, "tool_input": tool_input}
+        if agent:
+            event["agent_type"] = agent
+        done = subprocess.run([sys.executable, str(SCRIPT)],
+                              input=json.dumps(event), capture_output=True,
+                              text=True)
+        assert done.returncode == 0, done.stderr
+        if not done.stdout.strip():
+            return None
+        return json.loads(done.stdout)["hookSpecificOutput"][
+            "permissionDecision"]
+
+
+def dry_bash(command, agent=None, **kw):
+    return dry("Bash", {"command": command}, agent, **kw)
+
+
+class DryRun(unittest.TestCase):
+    def test_remote_commands_are_denied_for_the_main_session(self):
+        for command in ("git push origin x", "gh pr create", "gh pr merge 1",
+                        "gh issue create --title x", "gh issue edit 1",
+                        "gh issue comment 1 -b x", "gh issue close 1",
+                        "gh label create x"):
+            self.assertEqual(dry_bash(command), "deny", command)
+
+    def test_remote_commands_are_denied_for_an_agent_that_may_run_them(self):
+        self.assertEqual(dry_bash("git push", "pr-create"), "deny")
+        self.assertEqual(dry_bash("gh pr merge 1", "merger-mage"), "deny")
+
+    def test_reads_and_local_work_still_pass(self):
+        for command in ("git commit -m x", "git status", "pytest -q",
+                        "gh issue view 1", "gh issue list", "gh pr view 1",
+                        "gh repo view",
+                        "gh api repos/o/r/issues/1/sub_issues"):
+            self.assertIsNone(dry_bash(command), command)
+
+    def test_gh_api_that_changes_something_is_denied(self):
+        for command in ("gh api -X POST repos/o/r/issues/1/sub_issues",
+                        "gh api --method PATCH repos/o/r/issues/1",
+                        "gh api repos/o/r/issues -f title=x",
+                        "gh api repos/o/r/issues -F title=x"):
+            self.assertEqual(dry_bash(command), "deny", command)
+
+    def test_saving_to_memory_is_denied(self):
+        self.assertEqual(
+            dry("mcp__plugin_engram_engram__mem_save", {}), "deny")
+
+    def test_memory_search_still_passes(self):
+        self.assertIsNone(
+            dry("mcp__plugin_engram_engram__mem_search", {}))
+
+    def test_the_marker_is_found_under_paths_runs(self):
+        self.assertEqual(
+            dry_bash("git push", runs="runs",
+                     config='[paths]\nruns = "runs"\n'), "deny")
+
+    def test_the_reason_says_dry_run(self):
+        with tempfile.TemporaryDirectory() as project:
+            marker = pathlib.Path(project) / ".agentic" / "t" / "dry-run"
+            marker.parent.mkdir(parents=True)
+            marker.write_text("")
+            event = {"cwd": project, "tool_name": "Bash",
+                     "tool_input": {"command": "git push"}}
+            done = subprocess.run([sys.executable, str(SCRIPT)],
+                                  input=json.dumps(event),
+                                  capture_output=True, text=True)
+            self.assertIn("dry run", done.stdout)
+
+    def test_without_a_marker_nothing_changes(self):
+        self.assertIsNone(run(None, "Bash", {"command": "git push"}))
+
+
 if __name__ == "__main__":
     unittest.main()

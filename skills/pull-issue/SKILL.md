@@ -22,7 +22,7 @@ Settings come from `agentic.toml` (`labels.ready`, `labels.epic`, `labels.parent
    - With `epic=N`, take the first eligible child of that epic.
    - With neither, take the first eligible issue the search returns.
 4. A parent issue is never picked. Its open sub-issues are, first in GitHub's sub-issue order. List them with `gh api repos/{owner}/{repo}/issues/{number}/sub_issues`.
-5. Claim it by assigning it to the user with `gh issue edit --add-assignee @me`.
+5. Claim it by assigning it to the user with `gh issue edit --add-assignee @me`. In a dry run, skip this step.
 6. Return the issue in full. Read the epic body only to find the order of its children.
 
 If no issue is eligible, list what blocks each candidate and stop.

@@ -30,6 +30,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `PR_CREATED`: it names the pull request.
 - `PR_FAILED`: the pull request was not created.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `pr.md`: The pull request number and link, and the branch.
+- **Reads:** `plan.md`, `tests.md` and `run.md`.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

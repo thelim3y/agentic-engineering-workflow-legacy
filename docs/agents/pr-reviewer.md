@@ -31,6 +31,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `APPROVED`: the pull request is good.
 - `CHANGES_NEEDED`: it lists the changes.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `review.md`: Each finding with its file and line.
+- **Reads:** The ticket, the diff and the tests. Never `code.md`, so it reviews without knowing how the code was written.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

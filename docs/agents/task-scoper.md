@@ -33,6 +33,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `SPLIT`: the task was split into the sub-issues it lists.
 - `SCOPE_FAILED`: it could not judge or split the task.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `scope.md`: Why the task fits or was split; for a split, the number and title of each sub-issue.
+- **Reads:** The ticket.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

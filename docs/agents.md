@@ -9,6 +9,7 @@ Every agent has its own doc in `agents/` with these sections:
 - **Model:** which model the agent runs on, chosen per agent to save tokens.
 - **Rules:** what it must and must not do.
 - **Verdicts:** what it can return.
+- **Report:** the file it writes and the files it reads.
 - **Abort criteria:** when it stops and gives up.
 - **User input criteria:** when it stops and asks the user.
 

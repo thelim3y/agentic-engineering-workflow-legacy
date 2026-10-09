@@ -32,6 +32,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `PASS`: the suite passes.
 - `FAIL`: it lists the failing tests.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `run.md`: The commands run and their results, the failing tests with their output, and any rerun.
+- **Reads:** `tests.md`.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

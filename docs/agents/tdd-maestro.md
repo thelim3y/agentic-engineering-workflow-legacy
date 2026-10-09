@@ -34,6 +34,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `TEST_CHANGED`: a disputed test was changed.
 - `TESTS_NOT_WRITTEN`: it could not write tests that fail for the intended reason.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `tests.md`: The tests written, the red command, the failure it was expected to show and the failure observed; for a disputed test, the ruling; when no test could fail first, the alternate evidence and why.
+- **Reads:** `plan.md`, and `code.md` when it rules on a disputed test.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

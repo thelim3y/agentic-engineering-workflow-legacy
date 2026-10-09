@@ -33,6 +33,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `TEST_DISPUTED`: it believes a test is wrong, and names it.
 - `CODE_FAILED`: it could not write code that passes the tests.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `code.md`: The files changed and the check it ran; for a disputed test, the test and why.
+- **Reads:** `plan.md`, `tests.md`, and the latest `run.md`, `review.md` or `merge.md` that sent the work back.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

@@ -31,6 +31,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `PLANNED`: the plan is written.
 - `PLAN_FAILED`: it could not produce a plan.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `plan.md`: The behaviours to build, the files involved, and what is out of scope.
+- **Reads:** The ticket and `scope.md`.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

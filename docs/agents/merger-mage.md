@@ -31,6 +31,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `MERGED`: the pull request is merged.
 - `MERGE_FAILED`: the merge did not happen.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `merged.md`: The merge and the commit it made.
+- **Reads:** `merge.md`.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

@@ -31,6 +31,13 @@ The verdicts every agent can return are in `verdicts.md`. This agent also return
 - `MERGEABLE`: all merge conditions hold.
 - `NOT_MERGEABLE`: it lists the conditions that fail.
 
+## Report
+
+The report format is in `reports.md`.
+
+- **Writes** `merge.md`: Each merge condition checked, and its state.
+- **Reads:** `pr.md` and `review.md`.
+
 ## Abort criteria
 
 The criteria for every agent are in `abort-criteria.md`. This agent also aborts when:

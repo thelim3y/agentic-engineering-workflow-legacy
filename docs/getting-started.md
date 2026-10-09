@@ -94,9 +94,10 @@ For a GitHub issue, give its number:
 
 ## 6. Check the result
 
-- The run folder `.agentic/<ticket>/` holds one report per agent. Each starts with its verdict, and together they show the route the run took.
+- The reports are copied to `.agentic/agentic-engineering-workflow/dry-runs/<ticket>/` in your project, because the worktree is removed.
+- The run folder holds one report per agent. Each starts with its verdict, and together they show the route the run took.
 - Nothing changed on GitHub: no pull request, comment, assignment, sub-issue or merge.
-- Your main checkout is untouched. The work happened in a worktree, which a dry run removes at the end.
+- No tracked file in your main checkout changed. The work happened in a worktree, which a dry run removes at the end.
 - No new entry was saved to engram.
 
 If a command was blocked, the reason names the rule, and `hooks.md` explains each one.

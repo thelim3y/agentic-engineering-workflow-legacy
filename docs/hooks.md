@@ -50,6 +50,8 @@ The `ticket` skill, with `pull-issue`, runs in the main session. There the hook 
 | Command | Used for |
 |---|---|
 | `mkdir` | Creating the run folder |
+| `cp` | Copying a dry run's reports out of the worktree |
+| `gh issue comment` | Posting the reports to the issue in a real run |
 | `git rev-parse` | Checking whether it is in a linked worktree |
 | `git status` | Checking the working tree is clean |
 | `gh issue list` and `gh issue view` | Finding and reading the issue |

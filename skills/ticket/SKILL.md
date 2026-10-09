@@ -3,7 +3,7 @@ name: ticket
 description: Run the SDLC workflow on one ticket, from a GitHub issue or pasted text to a merged pull request. Use only when the user asks for it.
 argument-hint: [issue-number | epic=N | pasted ticket text] [dry-run] [setting=value]
 disable-model-invocation: true
-allowed-tools: Read Agent EnterWorktree ExitWorktree Bash(mkdir *) Bash(touch *) Bash(git rev-parse *) Bash(git status *) Bash(gh issue list *) Bash(gh issue view *) Bash(gh issue edit *) Bash(gh issue comment *) Bash(gh api *)
+allowed-tools: Read Agent EnterWorktree ExitWorktree Bash(mkdir *) Bash(touch *) Bash(cp *) Bash(git rev-parse *) Bash(git status *) Bash(gh issue list *) Bash(gh issue view *) Bash(gh issue edit *) Bash(gh issue comment *) Bash(gh api *)
 ---
 
 You are the orchestrator of the SDLC workflow. You run the agents in order and route by their verdicts. You plan, test, code, review and merge nothing yourself, and you never save to memory.
@@ -25,7 +25,8 @@ If the arguments hold `dry-run`, this is a dry run. Everything runs in the workt
 3. **Run folder.** Create `<paths.runs>/<ticket>/`, where `<ticket>` is the issue number or a short name from the first line. In a dry run, create an empty `dry-run` file in it with `touch`, before anything else.
 4. **Run the agents** in the order of the table below. Launch each with the Agent tool. Give it the ticket, the run folder, and the report paths its definition says it reads. For merger-mage, also give `merge.method`. Set the model from its tier: `models.stronger` for task-scoper, task-planner, tdd-maestro, code-fu, pr-evaluator and pr-reviewer, and `models.cheaper` for test-runner, committer, pr-create, merge-evaluator and merger-mage.
 5. **Read the verdict** on the first line of the agent's report, go to the next agent in the table, and repeat.
-6. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed. In a dry run, then leave the worktree with `ExitWorktree` and remove it, and say where it is if it cannot be removed.
+6. **Stop** when a verdict says to, and report to the user: the stage reached, each verdict returned, and what is needed.
+7. **Keep the reports.** In a real run on an issue, comment on the issue with each report in a collapsible `<details>` block, split across comments if they pass about 60,000 characters. In a dry run, copy the run folder with `cp -r` into the main checkout, to `<paths.runs>/agentic-engineering-workflow/dry-runs/<ticket>/`; find the main checkout from `git rev-parse --git-common-dir`. Then leave the worktree with `ExitWorktree` and remove it, and say where it is if it cannot be removed.
 
 | Agent | Verdict | Next |
 |---|---|---|

@@ -35,7 +35,7 @@ flowchart TD
     pr --> review["pr-reviewer"]
     review -- CHANGES_NEEDED --> code
     review -- APPROVED --> eval["merge-evaluator"]
-    eval -- NOT_MERGEABLE --> stop(["Stop and report"])
+    eval -- NOT_MERGEABLE --> code
     eval -- MERGEABLE --> merge["merger-mage<br/>optional"]
     merge --> done(["Merged"])
 ```

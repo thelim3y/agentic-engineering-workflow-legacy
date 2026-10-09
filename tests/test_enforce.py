@@ -205,8 +205,9 @@ class DryRun(unittest.TestCase):
             self.assertEqual(dry_bash(command), "deny", command)
 
     def test_saving_to_memory_is_denied(self):
-        self.assertEqual(
-            dry("mcp__plugin_engram_engram__mem_save", {}), "deny")
+        for name in ("mcp__engram__mem_save",
+                     "mcp__plugin_engram_engram__mem_save"):
+            self.assertEqual(dry(name, {}), "deny", name)
 
     def test_memory_search_still_passes(self):
         self.assertIsNone(

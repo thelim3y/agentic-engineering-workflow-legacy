@@ -36,6 +36,7 @@ COMMAND_RULES = {
 }
 
 
+MEM_SAVE = ("mcp__engram__mem_save", "mcp__plugin_engram_engram__mem_save")
 AGENTS = set(COMMAND_RULES) | {"task-planner"}
 READ_ONLY_COMMANDS = {"ls", "cat", "head", "tail", "wc", "pwd", "grep", "rg",
                       "find", "stat", "diff", "sort", "uniq", "tree", "file"}
@@ -217,7 +218,7 @@ def check_command(agent, event):
 
 def check_dry_run(event):
     tool = event.get("tool_name")
-    if tool == "mcp__plugin_engram_engram__mem_save":
+    if tool in MEM_SAVE:
         return deny("dry run", "memory is not written in a dry run.")
     if tool != "Bash":
         return

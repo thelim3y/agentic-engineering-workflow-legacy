@@ -2,7 +2,7 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Edit|Write|Bash|mcp__plugin_engram_engram__mem_save",
+        "matcher": "Edit|Write|Bash|mcp__engram__mem_save|mcp__plugin_engram_engram__mem_save",
         "hooks": [
           {
             "type": "command",

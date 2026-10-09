@@ -10,7 +10,7 @@ A pull request a reviewer can read without asking questions.
 
 ## Tools
 
-`Read`, `Grep`, `Bash`, `Write` (the report only), and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Bash`, `Write` (the report only), and from engram: `mcp__engram__mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

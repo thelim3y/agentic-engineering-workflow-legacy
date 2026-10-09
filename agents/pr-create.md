@@ -1,7 +1,7 @@
 ---
 name: pr-create
 description: Use when the work is committed, to push the branch and open the pull request.
-tools: Read, Grep, Bash, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Grep, Bash, Write, mcp__engram__mem_search
 model: sonnet
 skills:
   - pr-handoff

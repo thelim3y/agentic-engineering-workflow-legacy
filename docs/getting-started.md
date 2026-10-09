@@ -8,6 +8,7 @@ How to set up the plugin on a project and try a dry run. A dry run does the work
 - `git`, and the GitHub CLI `gh` signed in (`gh auth status`).
 - Python 3.11 or later, for the hook script.
 - `jq` and `curl`, which the engram plugin's hooks need.
+- Claude Code logged in; the installer runs `claude plugin` and `claude mcp`.
 
 ## 1. Check the plugin
 
@@ -22,16 +23,13 @@ Both must pass.
 
 ## 2. Install engram
 
-engram carries lessons between runs.
+engram carries lessons between runs. From the project you want to use it in:
 
 ```bash
-brew install gentleman-programming/tap/engram
-claude plugin marketplace add Gentleman-Programming/engram
-claude plugin install engram
-engram setup claude-code
+python3 /path/to/agentic-engineering-workflow/scripts/install_engram.py
 ```
 
-Without Homebrew, see engram's `docs/INSTALLATION.md` for `go install` and binary downloads.
+It installs the `engram` binary, using Homebrew if you have it and otherwise a checked download into `~/.local/bin`. It then installs engram's Claude Code plugin and registers its MCP server, both at local scope, so only this project, for you, loads them. Add `--user` to also run `engram setup claude-code`, which registers engram for every Claude Code session you have.
 
 ## 3. Prepare the project
 

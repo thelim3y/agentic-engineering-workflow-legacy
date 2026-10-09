@@ -10,7 +10,7 @@ The smallest code change that makes those tests pass.
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`, and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Edit`, `Write`, `Bash`, and from engram: `mcp__engram__mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

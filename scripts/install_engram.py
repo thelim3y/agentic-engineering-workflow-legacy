@@ -5,7 +5,8 @@
 
 1. The engram binary: Homebrew if present, otherwise the release file for this
    machine, checked against the release's checksums and put in ~/.local/bin.
-2. The engram plugin, at local scope: this project and this user only.
+2. The engram plugin and its MCP server, at local scope: this project and
+   this user only.
 
 --user also runs `engram setup claude-code`, which registers engram for every
 Claude Code session of the user.
@@ -100,8 +101,11 @@ def main():
     subprocess.run([claude, "plugin", "marketplace", "add", REPO], check=True)
     subprocess.run([claude, "plugin", "install", "engram", "--scope", "local"],
                    check=True)
+    engram = shutil.which("engram") or str(args.bin_dir / "engram")
+    subprocess.run([claude, "mcp", "add", "--transport", "stdio", "--scope",
+                    "local", "engram", "--", engram, "mcp", "--tools=agent"],
+                   check=True)
     if args.user:
-        engram = shutil.which("engram") or str(args.bin_dir / "engram")
         subprocess.run([engram, "setup", "claude-code"], check=True)
 
 

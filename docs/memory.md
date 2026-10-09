@@ -25,7 +25,7 @@ On the user's machine, in engram's local database. Nothing is committed to the r
 
 ## How agents reach it
 
-Through engram's Claude Code plugin, which brings its hooks and its MCP server. The plugin's tools are named `mcp__plugin_engram_engram__<tool>`, and with the plugin set up there are 19 of them.
+Through engram's Claude Code plugin, which brings its hooks, and engram's MCP server, which `scripts/install_engram.py` registers at local scope. The MCP server gives 19 tools, named `mcp__engram__<tool>`. The plugin alone gives no tools.
 
 ## The plugin's hooks
 

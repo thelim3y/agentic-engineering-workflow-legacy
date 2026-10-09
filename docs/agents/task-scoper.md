@@ -10,7 +10,7 @@ A task that one pass of plan, tests and code can finish: the original, or sub-is
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Bash`, `Write` (the report only), and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Bash`, `Write` (the report only), and from engram: `mcp__engram__mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

@@ -1,7 +1,7 @@
 ---
 name: pr-reviewer
 description: Use when a pull request is open, to review it against the task.
-tools: Read, Grep, Glob, Bash, Write, mcp__plugin_engram_engram__mem_search, mcp__plugin_engram_engram__mem_save
+tools: Read, Grep, Glob, Bash, Write, mcp__engram__mem_search, mcp__engram__mem_save
 model: claude-opus-5-5
 ---
 

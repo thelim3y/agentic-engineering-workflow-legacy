@@ -1,7 +1,7 @@
 ---
 name: test-runner
 description: Use after code is written or changed, to run the full suite and report the result.
-tools: Read, Grep, Glob, Bash, Write, mcp__plugin_engram_engram__mem_search, mcp__plugin_engram_engram__mem_save
+tools: Read, Grep, Glob, Bash, Write, mcp__engram__mem_search, mcp__engram__mem_save
 model: sonnet
 ---
 

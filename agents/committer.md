@@ -1,7 +1,7 @@
 ---
 name: committer
 description: Use when the work is ready, to make the one commit for the ticket.
-tools: Read, Grep, Bash, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Grep, Bash, Write, mcp__engram__mem_search
 model: sonnet
 ---
 

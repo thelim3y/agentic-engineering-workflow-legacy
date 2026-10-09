@@ -1,7 +1,7 @@
 ---
 name: task-scoper
 description: Use when a new ticket arrives, before any planning, to decide whether it is too large and to split it into sub-issues if so.
-tools: Read, Grep, Glob, Bash, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Grep, Glob, Bash, Write, mcp__engram__mem_search
 model: claude-opus-5-5
 ---
 

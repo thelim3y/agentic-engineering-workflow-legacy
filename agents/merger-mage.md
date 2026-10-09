@@ -1,7 +1,7 @@
 ---
 name: merger-mage
 description: Use when a pull request is mergeable and merging is enabled, to merge it.
-tools: Read, Bash, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Bash, Write, mcp__engram__mem_search
 model: sonnet
 ---
 

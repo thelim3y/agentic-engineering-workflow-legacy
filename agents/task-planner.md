@@ -1,7 +1,7 @@
 ---
 name: task-planner
 description: Use when a right-sized task needs a plan before any tests or code are written.
-tools: Read, Grep, Glob, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Grep, Glob, Write, mcp__engram__mem_search
 model: claude-opus-5-5
 ---
 

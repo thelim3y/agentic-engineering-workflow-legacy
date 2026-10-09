@@ -1,7 +1,7 @@
 ---
 name: merge-evaluator
 description: Use when a pull request is approved, to decide whether it can be merged.
-tools: Read, Bash, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Bash, Write, mcp__engram__mem_search
 model: sonnet
 ---
 

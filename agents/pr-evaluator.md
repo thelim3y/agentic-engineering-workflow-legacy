@@ -1,7 +1,7 @@
 ---
 name: pr-evaluator
 description: Use when the suite passes, to decide whether the work is ready for a pull request.
-tools: Read, Grep, Glob, Bash, Write, mcp__plugin_engram_engram__mem_search
+tools: Read, Grep, Glob, Bash, Write, mcp__engram__mem_search
 model: claude-opus-5-5
 ---
 

@@ -120,6 +120,16 @@ class Plugin(unittest.TestCase):
                 calls)
             self.assertIn("claude plugin install engram --scope local", calls)
 
+    def test_the_mcp_server_is_registered_at_local_scope(self):
+        with tempfile.TemporaryDirectory() as root:
+            release = make_release(root)
+            done, calls, bin_dir = run(root, release=release,
+                                       OS_NAME="linux", ARCH="x86_64")
+            self.assertEqual(done.returncode, 0, done.stderr)
+            self.assertIn(
+                f"claude mcp add --transport stdio --scope local engram -- "
+                f"{bin_dir / 'engram'} mcp --tools=agent", calls)
+
     def test_setup_runs_only_with_the_user_flag(self):
         with tempfile.TemporaryDirectory() as root:
             release = make_release(root)

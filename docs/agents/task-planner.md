@@ -10,7 +10,7 @@ A plan that tells the next agents which behaviour to build and what to leave out
 
 ## Tools
 
-`Read`, `Grep`, `Glob`, `Write` (the report only), and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
+`Read`, `Grep`, `Glob`, `Write` (the report only), and from engram: `mcp__engram__mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

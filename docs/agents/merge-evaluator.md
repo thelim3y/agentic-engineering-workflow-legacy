@@ -50,4 +50,4 @@ The criteria for every agent are in `abort-criteria.md`. This agent also aborts 
 
 The criteria for every agent are in `user-input-criteria.md`. This agent also asks when:
 
-- The merge needs a human approval that has not been given.
+- `merge.human_review` is true and a human has not approved the pull request.

@@ -11,7 +11,9 @@ Each project keeps its settings in `agentic.toml` in the project root. A value c
 # Attempts at the same step before an agent aborts with RETRY_LIMIT.
 retries = 3
 # The most files, tests included, that one task may create or change. A task
-# that needs more is too large and is split.
+# that needs more is too large and is split. Smaller tasks are more focused
+# steps for the LLM, and give pull requests and code reviews small enough
+# for a human to review properly.
 max_files = 5
 
 [labels]
@@ -39,6 +41,10 @@ tests = ["tests/**"]
 [merge]
 # Whether the merger-mage runs at all.
 enabled = true
+# Whether a human must review and approve the pull request before it is
+# merged and its task closed. When true, merge-evaluator returns NEEDS_USER
+# until a human has approved.
+human_review = true
 # How merger-mage merges: "rebase", "merge" or "squash". If the repository
 # does not allow it, merger-mage falls back to a merge commit.
 method = "rebase"

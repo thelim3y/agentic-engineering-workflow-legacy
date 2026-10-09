@@ -59,6 +59,6 @@ If your task message says this is a dry run: there is no pull request. Check wha
 
 - The ticket or plan can be read two ways that give different results, and nothing in the repository settles it.
 - The next step is irreversible, destructive or security-sensitive, or has an effect outside what this workflow does.
-- The merge needs a human approval that has not been given.
+- `merge.human_review` is true in your task message and a human has not approved the pull request.
 
 Ask one question at a time.

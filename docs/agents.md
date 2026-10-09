@@ -1,5 +1,15 @@
 # Agents
 
+Every agent has these sections:
+
+- **Name**
+- **Summary:** when to call the agent.
+- **Goal:** the outcome the agent works toward.
+- **Tools:** what the agent may use.
+- **Rules:** what it must and must not do.
+- **Abort criteria:** when it stops and gives up.
+- **User input criteria:** when it stops and asks the user.
+
 Four agents and an optional fifth, run in order by an orchestrator skill.
 
 ## Planner

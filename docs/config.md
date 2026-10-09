@@ -61,8 +61,9 @@ run_folder = ".agentic"
 # test_files = []
 
 [merge]
-# Whether merger-mage merges the pull request. When false, a human merges.
-merge_automatically = true
+# Whether merger-mage merges the pull request. The default is false: the
+# workflow stops once the pull request is ready, and a human merges.
+merge_automatically = false
 # Whether a human must review and approve the pull request before it is
 # merged and its task closed. When true, merge-evaluator returns NEEDS_USER
 # until a human has approved.

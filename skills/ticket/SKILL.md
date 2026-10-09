@@ -12,7 +12,7 @@ The arguments are: $ARGUMENTS
 
 ## Settings
 
-Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.attempts_per_step` 3, `limits.rework_loops` 3, `limits.max_files_per_task` 5, `labels.ai_ready` `ai-ready`, `labels.epic` `epic`, `labels.parent_issue` `parent-issue`, `models.stronger_tier` `opus`, `models.cheaper_tier` `sonnet`, `paths.run_folder` `.agentic`, `merge.merge_automatically` true, `merge.merge_method` `rebase`, `merge.require_human_review` true.
+Read `agentic.toml` in the project root if it exists. A `setting=value` argument overrides the file, and the file overrides these defaults: `limits.attempts_per_step` 3, `limits.rework_loops` 3, `limits.max_files_per_task` 5, `labels.ai_ready` `ai-ready`, `labels.epic` `epic`, `labels.parent_issue` `parent-issue`, `models.stronger_tier` `opus`, `models.cheaper_tier` `sonnet`, `paths.run_folder` `.agentic`, `merge.merge_automatically` false, `merge.merge_method` `rebase`, `merge.require_human_review` true.
 
 ## Dry run
 

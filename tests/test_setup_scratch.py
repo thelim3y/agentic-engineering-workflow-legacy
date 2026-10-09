@@ -44,6 +44,7 @@ class Local(unittest.TestCase):
             setup(target)
             toml = (target / "agentic.toml").read_text()
             self.assertIn('tests = ["tests/**"]', toml)
+            self.assertIn("max_files = 3", toml)
             self.assertIn(".agentic/", (target / ".gitignore").read_text())
             self.assertIn("unittest", (target / "CLAUDE.md").read_text())
 

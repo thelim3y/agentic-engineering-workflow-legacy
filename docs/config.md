@@ -10,6 +10,9 @@ Each project keeps its settings in `agentic.toml` in the project root. A value c
 [limits]
 # Attempts at the same step before an agent aborts with RETRY_LIMIT.
 retries = 3
+# The most files, tests included, that one task may create or change. A task
+# that needs more is too large and is split.
+max_files = 5
 
 [labels]
 # The label that marks an issue as ready for the workflow.

@@ -20,6 +20,7 @@ The stronger tier: `models.stronger` in `agentic.toml`.
 
 The rules for every agent are in `rules.md`. This agent also follows:
 
+- A task is too large when it would create or change more files, tests included, than `limits.max_files` in `agentic.toml`. Each piece of a split must fit within that limit too.
 - Never change the text of the original issue. When you split it, label it `parent-issue`.
 - Each sub-issue states its own goal and can be completed and tested on its own.
 - Never plan or write code.

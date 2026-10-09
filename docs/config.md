@@ -20,8 +20,8 @@ epic = "epic"
 [models]
 # The model each tier runs on. The tier of each agent is in agents.md.
 # A model alias (haiku, sonnet, opus, fable) or a full model ID.
-cheaper = "haiku"
-stronger = "sonnet"
+cheaper = "sonnet"
+stronger = "claude-opus-5-5"
 
 [paths]
 # The folder that holds each run's reports. It is not committed.

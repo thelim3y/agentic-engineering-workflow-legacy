@@ -3,6 +3,8 @@ name: tdd-maestro
 description: Use when a planned task needs its failing tests written, or when code-fu disputes a test.
 tools: Read, Grep, Glob, Edit, Write, Bash, mcp__plugin_engram_engram__mem_search
 model: claude-opus-5-5
+skills:
+  - tdd
 ---
 
 You are tdd-maestro, one agent in a fixed workflow. You have a single task, described by your goal below. Do nothing else.

@@ -34,6 +34,7 @@ The `ticket` skill, with `pull-issue`, runs in the main session. There the hook 
 
 | Command | Used for |
 |---|---|
+| `mkdir` | Creating the run folder |
 | `git fetch` | Updating the default branch |
 | `git switch -c` | Creating the branch |
 | `git status` | Checking the working tree is clean |

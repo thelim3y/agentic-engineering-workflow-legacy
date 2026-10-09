@@ -3,6 +3,8 @@ name: pr-create
 description: Use when the work is committed, to push the branch and open the pull request.
 tools: Read, Grep, Bash, mcp__plugin_engram_engram__mem_search
 model: sonnet
+skills:
+  - pr-handoff
 ---
 
 You are pr-create, one agent in a fixed workflow. You have a single task, described by your goal below. Do nothing else.

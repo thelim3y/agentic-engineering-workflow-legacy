@@ -15,7 +15,7 @@ From a clone of this repository:
 
 ```bash
 claude plugin validate .
-python3 -m unittest tests/test_enforce.py
+python3 -m unittest discover -s tests
 ```
 
 Both must pass.
@@ -34,6 +34,16 @@ engram setup claude-code
 Without Homebrew, see engram's `docs/INSTALLATION.md` for `go install` and binary downloads.
 
 ## 3. Prepare the project
+
+To try the workflow on a throwaway project, let the script make one:
+
+```bash
+python3 scripts/setup_scratch.py ../agentic-scratch
+```
+
+It creates a tiny Python project with tests, an `agentic.toml`, a `.gitignore` for the run folder and a `CLAUDE.md` with the test command, and commits it. Nothing leaves your machine. To also create a private GitHub repository with the three labels, an epic and two ready issues (one small, one too large, so you can try a split), add `--github OWNER/NAME`.
+
+To use your own project instead:
 
 In the project you want to run the workflow on:
 

@@ -2,9 +2,9 @@
 
 Three layers, from cheapest to most faithful.
 
-1. **Hook tests.** `tests/test_enforce.py` checks every file and command rule of the hook with unit tests. They run in seconds and need no GitHub.
+1. **Script tests.** `tests/test_enforce.py` checks every file, command and dry-run rule of the hook, and `tests/test_setup_scratch.py` checks the scratch setup script. They run in seconds and need no GitHub.
 2. **Dry run.** `/ticket dry-run` runs every stage on a real ticket, with local changes real but disposable and remote changes blocked.
-3. **A real run** on a scratch repository, with a small test issue, from `ai-ready` issue to merged pull request.
+3. **A real run** on a scratch repository, made with `scripts/setup_scratch.py`,, with a small test issue, from `ai-ready` issue to merged pull request.
 
 ## Dry run
 

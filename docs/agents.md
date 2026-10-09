@@ -6,6 +6,7 @@ Every agent has these sections:
 - **Summary:** when to call the agent.
 - **Goal:** the outcome the agent works toward.
 - **Tools:** what the agent may use.
+- **Model:** which model the agent runs on, chosen per agent to save tokens.
 - **Rules:** what it must and must not do.
 - **Abort criteria:** when it stops and gives up.
 - **User input criteria:** when it stops and asks the user.

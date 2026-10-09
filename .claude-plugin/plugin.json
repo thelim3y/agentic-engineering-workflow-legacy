@@ -1,0 +1,8 @@
+{
+  "name": "agentic-engineering-workflow",
+  "version": "0.1.0",
+  "description": "Project-agnostic SDLC agents and skills that carry a ticket, from a GitHub issue or pasted text, to a merged pull request.",
+  "author": { "name": "Justin Treen" },
+  "repository": "https://github.com/thelim3y/agentic-engineering-workflow",
+  "keywords": ["sdlc", "agents", "tdd", "workflow"]
+}

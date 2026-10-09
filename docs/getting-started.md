@@ -70,12 +70,21 @@ In the project you want to run the workflow on:
 
 ### Optional: run the agents as their own GitHub account
 
-So that branches, commits and pull requests show an AI account and not you, and so that you can approve pull requests yourself:
+So that branches, commits and pull requests show an AI account and not you, and so that you can approve pull requests yourself. GitHub's terms allow one free machine account besides your personal one, used only for automation. You create it by hand and stay responsible for it.
 
-1. Create a GitHub **machine account** by hand. GitHub's terms allow one free machine account besides your personal one, used only for automation. You stay responsible for it.
-2. Give it write access to the project, add an SSH key for it, and create a fine-grained token with contents, pull requests and issues permissions.
-3. Export the token as `AGENTIC_GH_TOKEN` in the shell where you run Claude Code.
-4. Add a `[github]` section to `agentic.toml`, as `config.md` shows.
+1. Create the machine account on GitHub.
+2. In your project, run the setup. It makes the account an SSH key, writes the `[github]` section of `agentic.toml`, and invites the account to the repository:
+
+   ```bash
+   python3 /path/to/agentic-engineering-workflow/scripts/ai_account.py init --account NAME --repo OWNER/REPO
+   ```
+
+3. It then lists the few steps only a person can do, each with its link: accept the invitation, add the public key, create a token, and export it as `AGENTIC_GH_TOKEN`.
+4. Check the result. It tells you what is still missing, and how to fix it:
+
+   ```bash
+   python3 /path/to/agentic-engineering-workflow/scripts/ai_account.py check
+   ```
 
 Pull requests then come from the AI account, and you approve them from your own account, which satisfies `merge.human_review`.
 

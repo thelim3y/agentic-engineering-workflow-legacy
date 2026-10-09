@@ -35,6 +35,10 @@ stronger = "opus"
 # Optional. When any of these is set, the hook runs the agents' commands as
 # this account, so branches, commits, issue claims and pull requests show the
 # AI account and not you. Leave the section out to run as yourself.
+# The account name and repository, written by scripts/ai_account.py init and
+# used by its check.
+account = "ai-bot"
+repo = "owner/name"
 # The name of the environment variable that holds the account's token. The
 # token itself never goes in this file.
 token_env = "AGENTIC_GH_TOKEN"

@@ -18,3 +18,7 @@ The first time an agent sees an item, it saves it with a count of one. Each late
 ## Scope
 
 A lesson belongs to one project. Nothing is shared across projects.
+
+## Where it lives
+
+On the user's machine, in engram's local database. Nothing is committed to the repository.

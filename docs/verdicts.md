@@ -9,6 +9,8 @@ Every agent ends with exactly one verdict and a short reason. The `ticket` skill
 | `BLOCKED` | An abort criterion was met. It carries a blocked reason. |
 | `NEEDS_USER` | A user input criterion was met. It carries the question. |
 
+A `*_FAILED` verdict means the agent tried its task and could not complete it. `BLOCKED` means a stop condition ended the work, and it carries a typed reason.
+
 ## Blocked reasons
 
 | Reason | Meaning |
@@ -23,12 +25,12 @@ Every agent ends with exactly one verdict and a short reason. The `ticket` skill
 
 | Agent | Verdicts |
 |---|---|
-| task-scoper | `FITS`: the task is right-sized. `SPLIT`: the task was split into the sub-issues it lists. |
-| task-planner | `PLANNED`: the plan is written. |
-| tdd-maestro | `TESTS_WRITTEN`: the tests fail for the intended reason. `TEST_KEPT`: a disputed test stays. `TEST_CHANGED`: a disputed test was changed. |
-| code-fu | `CODED`: the code is written. `TEST_DISPUTED`: it believes a test is wrong, and names it. |
+| task-scoper | `FITS`: the task is right-sized. `SPLIT`: the task was split into the sub-issues it lists. `SCOPE_FAILED`: it could not judge or split the task. |
+| task-planner | `PLANNED`: the plan is written. `PLAN_FAILED`: it could not produce a plan. |
+| tdd-maestro | `TESTS_WRITTEN`: the tests fail for the intended reason. `TEST_KEPT`: a disputed test stays. `TEST_CHANGED`: a disputed test was changed. `TESTS_NOT_WRITTEN`: it could not write tests that fail for the intended reason. |
+| code-fu | `CODED`: the code is written. `TEST_DISPUTED`: it believes a test is wrong, and names it. `CODE_FAILED`: it could not write code that passes the tests. |
 | test-runner | `PASS`: the suite passes. `FAIL`: it lists the failing tests. |
-| pr-create | `PR_CREATED`: it names the pull request. |
+| pr-create | `PR_CREATED`: it names the pull request. `PR_FAILED`: the pull request was not created. |
 | pr-reviewer | `APPROVED`: the pull request is good. `CHANGES_NEEDED`: it lists the changes. |
 | merge-evaluator | `MERGEABLE`: all merge conditions hold. `NOT_MERGEABLE`: it lists the conditions that fail. |
-| merger-mage | `MERGED`: the pull request is merged. |
+| merger-mage | `MERGED`: the pull request is merged. `MERGE_FAILED`: the merge did not happen. |

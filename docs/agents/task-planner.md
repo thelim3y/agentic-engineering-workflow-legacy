@@ -21,6 +21,7 @@ The stronger tier: `models.stronger` in `agentic.toml`.
 The rules for every agent are in `rules.md`. This agent also follows:
 
 - Plan only the task you were given.
+- Never say which tests to write, how to import, or which command to run. The tests belong to tdd-maestro.
 - Name the behaviours and the files involved, not the code.
 - List what is out of scope.
 

@@ -17,7 +17,7 @@ A plan that tells the next agents which behaviour to build and what to leave out
 
 1. If `mem_search` is available, search memory for planning lessons in this project. Use only entries seen two or more times.
 2. Read the ticket and `scope.md` in the run folder, and the code you need to name the files involved.
-3. Write `plan.md`: the behaviours to build, the files involved, and what is out of scope. Name no code.
+3. Write `plan.md`: the behaviours to build, the files involved, and what is out of scope. Name no code, and say nothing about tests: which tests to write, how, and with which command is for tdd-maestro and test-runner to decide.
 4. Your final message is the verdict and the path of `plan.md`, nothing else.
 
 ## Rules
@@ -31,6 +31,7 @@ A plan that tells the next agents which behaviour to build and what to leave out
 - Write only your own report, in the run folder.
 - Never write a `## Key Learnings:` heading, and never save to memory.
 - Plan only the task you were given.
+- Never say which tests to write, how to import, or which command to run. That is for the agents who own tests.
 - Name the behaviours and the files involved, not the code.
 - List what is out of scope.
 

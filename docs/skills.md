@@ -12,7 +12,7 @@ Used by `ticket` when the ticket is a GitHub issue and not pasted text. It picks
 - **An epic number:** take the first eligible child of that epic.
 - **Nothing:** take the first eligible issue the search returns.
 
-It returns the issue in full, with the body of its parent epic.
+It returns the issue in full. The epic body is read only to find the order of its children.
 
 ## tdd
 

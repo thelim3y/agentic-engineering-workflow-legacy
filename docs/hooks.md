@@ -25,3 +25,17 @@ If `paths.tests` is not set, the hook denies both agents' edits and says to set 
 | pr-reviewer | `git diff`, `git log` and read-only `gh pr` commands |
 | merge-evaluator | Read-only `gh pr` commands |
 | merger-mage | `gh pr view` and `gh pr merge` |
+
+## The ticket skill
+
+The `ticket` skill, with `pull-issue`, runs in the main session. There the hook sees no `agent_type` and does not know which skill is active, so it cannot enforce a skill's limits. These are the skill's `allowed-tools` pre-approvals instead, which let it run without prompts and leave every other command to the normal permission prompt:
+
+| Command | Used for |
+|---|---|
+| `git fetch` | Updating the default branch |
+| `git switch -c` | Creating the branch |
+| `git status` | Checking the working tree is clean |
+| `gh repo view` | Finding the default branch |
+| `gh issue list` and `gh issue view` | Finding and reading the issue |
+| `gh issue edit` | Assigning the issue to the user |
+| `gh issue comment` | Naming the branch on the issue |

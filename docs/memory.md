@@ -22,3 +22,7 @@ A lesson belongs to one project. Nothing is shared across projects.
 ## Where it lives
 
 On the user's machine, in engram's local database. Nothing is committed to the repository.
+
+## How agents reach it
+
+Through engram's Claude Code plugin, which brings its hooks and its MCP server.

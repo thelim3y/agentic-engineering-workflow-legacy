@@ -2,8 +2,6 @@
 
 Project-agnostic SDLC agents and skills that carry a ticket to a merged pull request.
 
-This is an early design. The agents and skills are not written yet.
-
 ## What it does
 
 A ticket comes in as a GitHub issue or as pasted text. The workflow takes it through:

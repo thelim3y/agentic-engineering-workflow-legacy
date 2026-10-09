@@ -25,4 +25,16 @@ On the user's machine, in engram's local database. Nothing is committed to the r
 
 ## How agents reach it
 
-Through engram's Claude Code plugin, which brings its hooks and its MCP server.
+Through engram's Claude Code plugin, which brings its hooks and its MCP server. The plugin's tools are named `mcp__plugin_engram_engram__<tool>`, and with the plugin set up there are 19 of them.
+
+## The plugin's hooks
+
+| Hook | What it does | Effect on our rules |
+|---|---|---|
+| `SessionStart` | Starts the engram server, opens a session, and injects the memory protocol and recent context into the main session | Subagents do not get it, so each reads memory with `mem_search` |
+| `UserPromptSubmit` | In the main session, loads the engram tools and nudges it to save every 15 minutes | The `ticket` skill never saves to memory, whatever the nudge says |
+| `SubagentStop` | Sends each subagent's final message to engram, which saves only the items under a `## Key Learnings:` heading and ignores all other text | No agent writes that heading; the `rules.md` rule below keeps the capture empty |
+| `PreToolUse` | Binds the session on write calls | None |
+| `SessionEnd` and compaction recovery | Marks the session ended and restores context after compaction | None |
+
+Only test-runner and pr-reviewer have `mem_save` in their tools, so no other agent can save through the tool. Passive capture bypasses the tools list, which is why no agent writes the `## Key Learnings:` heading. The protocol engram injects tells agents to write it, and whether subagents see that protocol is not verified.

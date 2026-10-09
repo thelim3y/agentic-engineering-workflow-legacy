@@ -10,7 +10,7 @@ The approved pull request merged cleanly into the base branch.
 
 ## Tools
 
-`Read`, `Bash`, and from engram: `mem_search`. The command limits are in `hooks.md`.
+`Read`, `Bash`, and from engram: `mcp__plugin_engram_engram__mem_search`. The command limits are in `hooks.md`.
 
 ## Model
 

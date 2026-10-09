@@ -12,7 +12,7 @@ What each agent must and must not do. Verdicts, abort criteria, user input crite
 
 | Agent | Rules |
 |---|---|
-| task-scoper | Never change the text of the original issue. Each sub-issue states its own goal and can be completed and tested on its own. Never plan or write code. |
+| task-scoper | Never change the text of the original issue. Each sub-issue states its own goal and can be completed and tested on its own. Never plan or write code. Create sub-issues without `ai-ready`, as `issues.md` says. |
 | task-planner | Plan only the task you were given. Name the behaviours and the files involved, not the code. List what is out of scope. |
 | tdd-maestro | Test public behaviour, never implementation. Write the smallest focused test first. Run each test and see it fail for the intended reason. Write no production code. |
 | code-fu | Make only the change needed to pass the tests. Never edit a test; return `TEST_DISPUTED` instead. Never skip checks, for example with `--no-verify`. Stay inside the task. |
